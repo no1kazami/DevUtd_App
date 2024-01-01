@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    Ultimate Mobile Kit
+    Created by Patryk Stepniewski
+    Copyright (c) 2014-2019 gameDNA Ltd. All Rights Reserved.
+-->
+<root xmlns:android="http://schemas.ios.com/res/ios">
+  <init>
+	<log text="Ultimate Mobile Kit init"/>
+	<setBoolFromProperty result="bEnableAnalytics" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableAnalytics" default="false"/>
+	<setStringFromProperty result="FirebaseBundleId" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="FirebaseBundleIdIOS" default="undefined"/>
+	<setStringFromProperty result="FirebaseReversedClientId" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="FirebaseReversedClientIdIOS" default="undefined"/>
+  </init>
+
+  <iosPListUpdates>
+	<!-- NSAppTransportSecurity -->
+	<loopElements tag="$">
+	  <setStringFromTag result="sCurrentTag" tag="$"/>
+	  <setBoolIsEqual result="isRootDictionary" arg1="$S(sCurrentTag)" arg2="dict"/>
+
+	  <if condition="isRootDictionary">
+		<true>
+		  <setBool result="bNSAppTransportSecurityFound" value="false"/>
+		  <setBool result="bNSAppTransportSecuritySearchNextElement" value="false"/>
+		  <setBool result="bNSAppTransportSecurityRemoveNextElement" value="false"/>
+
+		  <loopElements tag="$">
+			<setStringFromTagText result="TagValueFindCoreElement" tag="$"/>
+			<setBoolIsEqual result="isNSAppTransportSecurity" arg1="$S(TagValueFindCoreElement)" arg2="NSAppTransportSecurity"/>
+
+			<if condition="isNSAppTransportSecurity">
+			  <true>
+				<setBool result="bNSAppTransportSecurityFound" value="true"/>
+			  </true>
+			</if>
+		  </loopElements>
+
+		  <if condition="bNSAppTransportSecurityFound">
+			<false>
+			  <setElement result="dNSAppTransportSecurity" value="key" text="NSAppTransportSecurity"/>
+			  <addElement tag="$" name="dNSAppTransportSecurity"/>
+			  <setElement result="dNSAppTransportSecurityRootDict" value="dict"/>
+			  <addElement tag="$" name="dNSAppTransportSecurityRootDict"/>
+			</false>
+		  </if>
+
+		  <loopElements tag="$">
+			<setStringFromTagText result="TagValue" tag="$"/>
+			<setBoolIsEqual result="isNSAppTransportSecurity" arg1="$S(TagValue)" arg2="NSAppTransportSecurity"/>
+
+			<if condition="bNSAppTransportSecuritySearchNextElement">
+			  <true>
+				<setBool result="bNSAppTransportSecuritySearchNextElement" value="false"/>
+				<loopElements tag="$">
+				  <setStringFromTagText result="NSAppTransportSecurityTagValue" tag="$"/>
+
+				  <if condition="bNSAppTransportSecurityRemoveNextElement">
+					<true>
+					  <removeElement tag="$"/>
+					  <setBool result="bNSAppTransportSecurityRemoveNextElement" value="false"/>
+					</true>
+				  </if>
+
+				  <setBoolIsEqual result="isNSAllowsArbitraryLoads" arg1="$S(NSAppTransportSecurityTagValue)" arg2="NSAllowsArbitraryLoads"/>
+				  <if condition="isNSAllowsArbitraryLoads">
+					<true>
+					  <removeElement tag="$"/>
+					  <setBool result="bNSAppTransportSecurityRemoveNextElement" value="true"/>
+					</true>
+				  </if>
+				</loopElements>
+
+				<setElement result="eNSAllowsArbitraryLoads" value="key" text="NSAllowsArbitraryLoads"/>
+				<addElement tag="$" name="eNSAllowsArbitraryLoads"/>
+				<setElement result="eNSAllowsArbitraryLoadsTrue" value="true" text=""/>
+				<addElement tag="$" name="eNSAllowsArbitraryLoadsTrue"/>
+			  </true>
+			</if>
+
+			<if condition="isNSAppTransportSecurity">
+			  <true>
+				<setBool result="bNSAppTransportSecuritySearchNextElement" value="true"/>
+			  </true>
+			</if>
+		  </loopElements>
+		</true>
+	  </if>
+	</loopElements>
+
+	<!-- CFBundleURLTypes -->
+	<loopElements tag="$">
+	  <setStringFromTag result="sCurrentTag" tag="$"/>
+	  <setBoolIsEqual result="isRootDictionary" arg1="$S(sCurrentTag)" arg2="dict"/>
+
+	  <if condition="isRootDictionary">
+		<true>
+		  <setBool result="bCFBundleURLTypesFound" value="false"/>
+		  <setBool result="bCFBundleURLTypesSearchNextElement" value="false"/>
+
+		  <loopElements tag="$">
+			<setStringFromTagText result="TagValueFindCoreElement" tag="$"/>
+			<setBoolIsEqual result="isCFBundleURLTypes" arg1="$S(TagValueFindCoreElement)" arg2="CFBundleURLTypes"/>
+
+			<if condition="isCFBundleURLTypes">
+			  <true>
+				<setBool result="bCFBundleURLTypesFound" value="true"/>
+			  </true>
+			</if>
+		  </loopElements>
+
+		  <if condition="bCFBundleURLTypesFound">
+			<false>
+			  <setElement result="dCFBundleURLTypes" value="key" text="CFBundleURLTypes"/>
+			  <addElement tag="$" name="dCFBundleURLTypes"/>
+			  <setElement result="dCFBundleURLTypesRootArray" value="array"/>
+			  <addElement tag="$" name="dCFBundleURLTypesRootArray"/>
+			</false>
+		  </if>
+
+		  <loopElements tag="$">
+			<setStringFromTagText result="TagValueFindCoreElement" tag="$"/>
+			<setBoolIsEqual result="isCFBundleURLTypes" arg1="$S(TagValueFindCoreElement)" arg2="CFBundleURLTypes"/>
+
+			<if condition="bCFBundleURLTypesSearchNextElement">
+			  <true>
+				<setBool result="bCFBundleURLTypesSearchNextElement" value="false"/>
+
+				<setElement result="dCFBundleURLTypesDict" value="dict"/>
+
+				<setElement result="dCFBundleTypeRoleKey" value="key" text="CFBundleTypeRole"/>
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleTypeRoleKey"/>
+
+				<setElement result="dCFBundleTypeRoleString" value="string" text="Editor"/>
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleTypeRoleString"/>
+
+				<setElement result="dCFBundleURLNameKey" value="key" text="CFBundleURLName"/>
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleURLNameKey"/>
+
+				<setElement result="dCFBundleURLNameString" value="string" text="Bundle ID"/>
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleURLNameString"/>
+
+				<setElement result="dCFBundleURLSchemes" value="key" text="CFBundleURLSchemes"/>
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleURLSchemes"/>
+
+				<setElement result="dCFBundleURLSchemesRootArray" value="array"/>
+
+				<setElement result="dCFBundleURLSchemesAppId" value="string" text="$S(FirebaseBundleId)"/>
+				<addElement tag="$dCFBundleURLSchemesRootArray" name="dCFBundleURLSchemesAppId"/>
+
+				<addElement tag="$dCFBundleURLTypesDict" name="dCFBundleURLSchemesRootArray"/>
+
+				<addElement tag="$" name="dCFBundleURLTypesDict"/>
+
+
+				<setElement result="dCFBundleURLTypesDictSecond" value="dict"/>
+
+				<setElement result="dCFBundleTypeRoleKeySecond" value="key" text="CFBundleTypeRole"/>
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleTypeRoleKeySecond"/>
+
+				<setElement result="dCFBundleTypeRoleStringSecond" value="string" text="Editor"/>
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleTypeRoleStringSecond"/>
+
+				<setElement result="dCFBundleURLNameKeySecond" value="key" text="CFBundleURLName"/>
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleURLNameKeySecond"/>
+
+				<setElement result="dCFBundleURLNameStringSecond" value="string" text="Reversed Client ID"/>
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleURLNameStringSecond"/>
+
+				<setElement result="dCFBundleURLSchemesSecond" value="key" text="CFBundleURLSchemes"/>
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleURLSchemesSecond"/>
+
+				<setElement result="dCFBundleURLSchemesRootArraySecond" value="array"/>
+
+				<setElement result="dCFBundleURLSchemesAppIdSecond" value="string" text="$S(FirebaseReversedClientId)"/>
+				<addElement tag="$dCFBundleURLSchemesRootArraySecond" name="dCFBundleURLSchemesAppIdSecond"/>
+
+				<addElement tag="$dCFBundleURLTypesDictSecond" name="dCFBundleURLSchemesRootArraySecond"/>
+
+				<addElement tag="$" name="dCFBundleURLTypesDictSecond"/>
+			  </true>
+			</if>
+
+			<if condition="isCFBundleURLTypes">
+			  <true>
+				<setBool result="bCFBundleURLTypesSearchNextElement" value="true"/>
+			  </true>
+			</if>
+		  </loopElements>
+		</true>
+	  </if>
+	</loopElements>
+
+	<!-- Usage Descriptions -->
+	<loopElements tag="$">
+	  <setStringFromTag result="sCurrentTag" tag="$"/>
+	  <setBoolIsEqual result="isRootDictionary" arg1="$S(sCurrentTag)" arg2="dict"/>
+
+	  <if condition="isRootDictionary">
+		<true>
+		  <setBool result="bNSContactsUsageDescriptionFound" value="false"/>
+
+		  <loopElements tag="$">
+			<setStringFromTagText result="TagValue" tag="$"/>
+
+			<if condition="bNSContactsUsageDescriptionFound">
+			  <false>
+				<setBoolIsEqual result="bNSContactsUsageDescriptionFound" arg1="$S(TagValue)" arg2="NSContactsUsageDescription"/>
+			  </false>
+			</if>
+		  </loopElements>
+
+		  <if condition="bNSContactsUsageDescriptionFound">
+			<false>
+			  <setElement result="eNSContactsUsageDescription" value="key" text="NSContactsUsageDescription"/>
+			  <addElement tag="$" name="eNSContactsUsageDescription"/>
+			  <setElement result="eNSContactsUsageDescriptionString" value="string" text="Firebase Invites"/>
+			  <addElement tag="$" name="eNSContactsUsageDescriptionString"/>
+			</false>
+		  </if>
+		</true>
+	  </if>
+	</loopElements>
+
+	<!-- Other -->
+	<loopElements tag="$">
+	  <setStringFromTag result="sCurrentTag" tag="$"/>
+	  <setBoolIsEqual result="isRootDictionary" arg1="$S(sCurrentTag)" arg2="dict"/>
+
+	  <if condition="isRootDictionary">
+		<true>
+		  <setElement result="eFirebaseCrashlyticsCollectionEnabled" value="key" text="firebase_crashlytics_collection_enabled"/>
+		  <addElement tag="$" name="eFirebaseCrashlyticsCollectionEnabled"/>
+		  <setElement result="eFirebaseCrashlyticsCollectionEnabledValue" value="false" text=""/>
+		  <addElement tag="$" name="eFirebaseCrashlyticsCollectionEnabledValue"/>
+
+		  <if condition="bEnableAnalytics">
+			<false>
+			  <setElement result="eFirebaseAnalyticsCollectionDeactivated" value="key" text="FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED"/>
+			  <addElement tag="$" name="eFirebaseAnalyticsCollectionDeactivated"/>
+			  <setElement result="eFirebaseAnalyticsCollectionDeactivatedValue" value="true" text=""/>
+			  <addElement tag="$" name="eFirebaseAnalyticsCollectionDeactivatedValue"/>
+			</false>
+		  </if>
+		</true>
+	  </if>
+	</loopElements>
+  </iosPListUpdates>
+</root>

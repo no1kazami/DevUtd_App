@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "413150909792",
+	"firebase_url": "https://devutd-8c34e-default-rtdb.firebaseio.com",
+    "project_id": "devutd-8c34e",
+    "storage_bucket": "devutd-8c34e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413150909792:android:c660ba1853c6062756ba05",
+        "android_client_info": {
+          "package_name": "com.PrintfGames.DevUtd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413150909792-g6crn8ot78srbjb3sq9mksk3jtu6cvb3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGu4I0Rc-L-gOSJhig0L39L5bdUSFAf64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413150909792-g6crn8ot78srbjb3sq9mksk3jtu6cvb3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

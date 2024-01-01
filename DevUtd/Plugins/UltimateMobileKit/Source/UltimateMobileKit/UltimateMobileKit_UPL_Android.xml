@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    Ultimate Mobile Kit
+    Created by Patryk Stepniewski
+    Copyright (c) 2014-2019 gameDNA Ltd. All Rights Reserved.
+-->
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+  <init>
+	<log text="Ultimate Mobile Kit init"/>
+	<setBoolFromProperty result="bEnableGradle" ini="Engine" section="/Script/AndroidRuntimeSettings.AndroidRuntimeSettings" property="bEnableGradle" default="false"/>
+	<setBoolFromProperty result="bEnableAnalytics" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableAnalytics" default="false"/>
+	<setBoolFromProperty result="bEnableAuthentication" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableAuthentication" default="false"/>
+	<setBoolFromProperty result="bEnableRemoteConfig" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableRemoteConfig" default="false"/>
+	<setBoolFromProperty result="bEnableCrashlytics" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableCrashlytics" default="false"/>
+	<setBoolFromProperty result="bEnableInAppMessaging" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableInAppMessaging" default="false"/>
+	<setBoolFromProperty result="bEnableInstanceId" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableInstanceId" default="false"/>
+	<setBoolFromProperty result="bEnableLinksInvites" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableLinksInvites" default="false"/>
+	<setBoolFromProperty result="bEnableCloudMessaging" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableCloudMessaging" default="false"/>
+	<setBoolFromProperty result="bEnablePerformanceMonitoring" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnablePerformanceMonitoring" default="false"/>
+	<setBoolFromProperty result="bEnableStorage" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableStorage" default="false"/>
+	<setBoolFromProperty result="bEnableTestLab" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableTestLab" default="false"/>
+  <setBoolFromProperty result="bEnableDataBase_CKH" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableDataBase_CKH" default="false"/>
+	<setStringFromProperty result="FirebaseBundleIdAndroid" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="FirebaseBundleIdAndroid" default=""/>
+	<setBoolFromProperty result="bEnableCrashlyticsDebugMode" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableCrashlyticsDebugMode" default="false"/>
+	<setIntFromProperty result="NumberOfGameLoops" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="NumberOfGameLoops" default="1"/>
+	<setBoolFromProperty result="bEnableCrashlyticsAutoAndroidSymbolsUploadDevelopment" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableCrashlyticsAutoAndroidSymbolsUploadDevelopment" default="true"/>
+	<setBoolFromProperty result="bEnableCrashlyticsAutoAndroidSymbolsUploadShipping" ini="Engine" section="/Script/UltimateMobileKit.UltimateMobileKitSettings" property="bEnableCrashlyticsAutoAndroidSymbolsUploadShipping" default="true"/>
+  </init>
+
+  <!-- Gradle -->
+  <buildGradleAdditions>
+	<insert>
+	  repositories {
+		mavenCentral()
+		maven {
+			url "https://maven.google.com"
+		}
+	  }
+	  dependencies {
+		implementation 'com.google.android.gms:play-services-auth:16.0.1'
+		implementation 'com.google.android.gms:play-services-games:17.0.0'
+		implementation 'com.google.android.gms:play-services-nearby:16.0.0'
+		implementation 'com.google.android.gms:play-services-plus:16.0.0'
+		implementation 'com.google.android.gms:play-services-ads:16.0.0'
+		implementation 'com.google.firebase:firebase-core:16.0.8'
+		implementation 'com.google.firebase:firebase-analytics:16.4.0'
+	  }
+	</insert>
+	<if condition="bEnableAuthentication">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'com.google.firebase:firebase-auth:16.2.0'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableInAppMessaging">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'com.google.firebase:firebase-inappmessaging-display:17.1.0'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableRemoteConfig">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'com.google.firebase:firebase-config:16.4.0'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+		  apply plugin: 'io.fabric'
+		  
+		  repositories {
+			maven { url 'https://maven.fabric.io/public' }
+		  }
+
+		  dependencies {
+			implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+			implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
+		  }
+
+		  crashlytics {
+			enableNdk true
+			androidNdkOut 'build/intermediates/transforms/mergeJniLibs'
+			androidNdkLibsOut 'build/intermediates/transforms/stripDebugSymbol'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCloudMessaging">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'com.google.firebase:firebase-messaging:17.4.0'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableLinksInvites">
+	  <true>
+		<insert>
+		  dependencies {
+		  	implementation 'com.google.firebase:firebase-invites:16.1.1'
+			implementation 'com.google.firebase:firebase-dynamic-links:16.1.8'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnablePerformanceMonitoring">
+	  <true>
+		<insert>
+		  apply plugin: 'com.google.firebase.firebase-perf'
+
+		  dependencies {
+			implementation 'com.google.firebase:firebase-perf:16.2.4'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableStorage">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'com.google.firebase:firebase-storage:16.1.0'
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableTestLab">
+	  <true>
+		<insert>
+		  dependencies {
+			implementation 'junit:junit:4.12'
+		  }
+		</insert>
+	  </true>
+	</if>
+  <if condition="bEnableDataBase_CKH">
+    <true>
+      <insert>
+        dependencies {
+        implementation 'com.google.firebase:firebase-database:16.1.0'
+        }
+      </insert>
+    </true>
+  </if>
+	<insert>
+	  apply plugin: 'com.google.gms.google-services'
+	</insert>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+		  android {
+			afterEvaluate {
+			</insert>
+			  <if condition="bEnableCrashlyticsAutoAndroidSymbolsUploadDevelopment">
+				<true>
+				  <insert>
+					assembleDebug.finalizedBy(crashlyticsUploadSymbolsDebug)
+				  </insert>
+				</true>
+			  </if>
+			  <if condition="bEnableCrashlyticsAutoAndroidSymbolsUploadShipping">
+				<true>
+				  <insert>
+					assembleRelease.finalizedBy(crashlyticsUploadSymbolsRelease)
+				  </insert>
+				</true>
+			  </if>
+			<insert>
+			}
+		  }
+		</insert>
+	  </true>
+	</if>
+  </buildGradleAdditions>
+
+  <baseBuildGradleAdditions>
+	<insert>
+	  allprojects {
+		repositories {
+		  google()
+
+		  maven {
+			url "https://maven.google.com"
+		  }
+
+		  jcenter()
+		}
+	  }
+	</insert>
+  </baseBuildGradleAdditions>
+
+  <buildscriptGradleAdditions>
+	<insert>
+	  repositories {
+		google()
+
+		maven {
+		  url 'https://maven.fabric.io/public'
+		}
+
+		jcenter()
+	  }
+
+	   dependencies {
+		  classpath 'com.google.gms:google-services:4.2.0'
+		  classpath 'com.google.firebase:firebase-plugins:1.1.5'
+		  classpath 'io.fabric.tools:gradle:1.26.1'
+	  }
+	</insert>
+  </buildscriptGradleAdditions>
+
+  <!-- Maven -->
+  <AARImports>
+	<insertValue value="repositories $S(PluginDir)/../../Source/ThirdParty/AndroidRepository"/>
+	<insertNewline/>
+	<if condition="bEnableGradle">
+	  <true>
+		<if condition="bEnableCloudMessaging">
+		  <true>
+			<insert>
+com.google.firebase.messaging.cpp,firebase-messaging-cpp,17.4.0
+			</insert>
+		  </true>
+		</if>
+		<if condition="bEnableTestLab">
+		  <true>
+			<insert>
+com.google.cloud.testing.android.lib,cloudtestingscreenshotter,1.0.0
+			</insert>
+		  </true>
+		</if>
+	  </true>
+	</if>
+  </AARImports>
+
+  <resourceCopies>
+	<copyDir src="$S(PluginDir)/../../Source/ThirdParty/AndroidAddons"
+					dst="$S(BuildDir)" />
+  </resourceCopies>
+
+  <proguardAdditions>
+	<insert>
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+-keep class com.google.android.gms.common.internal.ReflectedParcelable
+-keepnames class * implements com.google.android.gms.common.internal.ReflectedParcelable
+-keepclassmembers class * implements android.os.Parcelable {
+  public static final *** CREATOR;
+}
+-keep @interface android.support.annotation.Keep
+-keep @android.support.annotation.Keep class *
+-keepclasseswithmembers class * {
+  @android.support.annotation.Keep &lt;fields&gt;;
+}
+-keepclasseswithmembers class * {
+  @android.support.annotation.Keep &lt;methods&gt;;
+}
+-keep @interface com.google.android.gms.common.annotation.KeepName
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+  @com.google.android.gms.common.annotation.KeepName *;
+}
+-keep @interface com.google.android.gms.common.util.DynamiteApi
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+  public &lt;fields&gt;;
+  public &lt;methods&gt;;
+}
+-dontwarn android.security.NetworkSecurityPolicy
+-dontwarn android.app.Notification
+-dontwarn sun.misc.Unsafe
+-dontwarn libcore.io.Memory
+	  
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepclasseswithmembers class * { @retrofit.http.* &lt;methods&gt;; }
+-keep class retrofit.** { *; }
+-keepclassmembers class com.PrintfGames.DevUtd.** {
+    *;
+}
+	  
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.PendingResult { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.Result { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.ResultCallback { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.Status { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.ConnectionResult { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.GoogleApiAvailability{ *; }
+-keep,includedescriptorclasses public class com.google.android.gms.crash.internal.api.CrashApiImpl { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.tasks.OnFailureListener { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.tasks.OnSuccessListener { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.tasks.Task { *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseApp{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseOptions{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseOptions$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.iid.FirebaseInstanceId{ *; }
+-keep,includedescriptorclasses public class dalvik.system.DexClassLoader{ *; }
+	</insert>
+
+	<if condition="bEnableAnalytics">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.firebase.analytics.FirebaseAnalytics{ *; }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableAuthentication">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.firebase.auth.AdditionalUserInfo{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.AuthCredential{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.AuthResult{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.EmailAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FacebookAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuth{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthActionCodeException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthEmailException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthInvalidCredentialsException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthInvalidUserException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthUserCollisionException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthWeakPasswordException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuthWebException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseUser{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseUserMetadata{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.GetTokenResult{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.GithubAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.GoogleAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.OAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.PhoneAuthCredential{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.PhoneAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.PhoneAuthProvider$OnVerificationStateChangedCallbacks { *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken { *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.PlayGamesAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.ProviderQueryResult{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.TwitterAuthProvider{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.UserInfo{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.UserProfileChangeRequest$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseApiNotAvailableException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseNetworkException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.FirebaseTooManyRequestsException{ *; }
+-keep,includedescriptorclasses public class java.util.concurrent.TimeUnit{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuth$AuthStateListener { *; }
+-keep,includedescriptorclasses public class com.google.firebase.auth.FirebaseAuth$IdTokenListener { *; }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableRemoteConfig">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfig{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfigFetchThrottledException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfigInfo{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.remoteconfig.FirebaseRemoteConfigValue{ *; }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableLinksInvites">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInvite { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteApi { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteInvitation { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteInvitation$IntentBuilder { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteInvitation$IntentBuilder$PlatformMode { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteInvitationResult { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.appinvite.AppInviteReferral { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.Api { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.GoogleApiClient { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.GoogleApiClient$Builder { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.GoogleApiClient$ConnectionCallbacks { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.GoogleApiClient$OnConnectionFailedListener { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.PendingResult { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.Result { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.ResultCallback { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.api.Status { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.common.ConnectionResult { *; }
+-keep,includedescriptorclasses public class com.google.firebase.app.internal.cpp.Log { *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$AndroidParameters$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$GoogleAnalyticsParameters$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$IosParameters$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$ItunesConnectAnalyticsParameters$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.DynamicLink$SocialMetaTagParameters$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.FirebaseDynamicLinks{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.PendingDynamicLinkData{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.ShortDynamicLink{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.ShortDynamicLink$Suffix{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.dynamiclinks.ShortDynamicLink$Warning{ *; }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCloudMessaging">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.android.gms.messaging.cpp.DebugLogging { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.messaging.cpp.FcmInstanceIDListenerService { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.messaging.cpp.ListenerService { *; }
+-keep,includedescriptorclasses public class com.google.android.gms.messaging.cpp.RegistrationIntentService { *; }
+-keep,includedescriptorclasses public class com.google.firebase.messaging.cpp.RegistrationIntentService{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.messaging.FirebaseMessaging{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.messaging.RemoteMessage$Builder{ *; }
+-keep,includedescriptorclasses public class java.lang.IllegalArgumentException{ *; }
+-dontwarn com.google.android.gms.measurement.AppMeasurement*
+		</insert>
+	  </true>
+	</if>
+    <if condition="bEnableInAppMessaging">
+	  <true>
+		<insert>
+-dontwarn javax.naming.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn org.checkerframework.**
+-dontwarn java.lang.ClassValue
+-dontwarn com.google.j2objc.annotations.Weak
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn javax.lang.model.element.Modifier
+-dontwarn okio.**
+-dontwarn com.google.j2objc.annotations.**
+-dontwarn afu.org.checkerframework.**
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableStorage">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.firebase.storage.FileDownloadTask$TaskSnapshot{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.FirebaseStorage{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StorageException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StorageMetadata{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StorageMetadata$Builder{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StorageReference{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StorageTask{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StreamDownloadTask { *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StreamDownloadTask$StreamProcessor { *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.StreamDownloadTask$TaskSnapshot{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.UploadTask$TaskSnapshot{ *; }
+-keep,includedescriptorclasses public class java.lang.IndexOutOfBoundsException{ *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.OnPausedListener { *; }
+-keep,includedescriptorclasses public class com.google.firebase.storage.OnProgressListener { *; }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnablePerformanceMonitoring">
+	  <true>
+		<insert>
+-dontwarn com.google.firebase.perf.network.**
+-dontwarn okio.**
+-dontwarn org.apache.http.**
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableTestLab">
+	  <true>
+		<insert>
+-keep,includedescriptorclasses public class com.google.android.libraries.cloudtesting.screenshots.ScreenShotter { *; }
+-dontnote junit.framework.**
+-dontnote junit.runner.**
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-dontwarn com.squareup.javawriter.JavaWriter
+		</insert>
+	  </true>
+	</if>
+  <if condition="bEnableDataBase_CKH">
+      <true>
+        <insert>
+          -keep,includedescriptorclasses public class com.google.firebase.database.ChildEventListener { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.DatabaseError { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.DatabaseError{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.DatabaseReference{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.DataSnapshot { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.DataSnapshot{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.FirebaseDatabase{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.MutableData { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.MutableData{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.OnDisconnect{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.Query{ *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.Transaction { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.Transaction$Handler { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.Transaction$Result { *; }
+          -keep,includedescriptorclasses public class com.google.firebase.database.ValueEventListener { *; }
+        </insert>
+      </true>
+    </if>
+  </proguardAdditions>
+
+  <gameActivityImportAdditions>
+	<if condition="bEnableAnalytics">
+	  <true>
+		<insert>
+		  import com.google.firebase.analytics.FirebaseAnalytics;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableAuthentication">
+	  <true>
+		<insert>
+		  import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+		  import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+		  import com.google.android.gms.auth.api.signin.GoogleSignIn;
+		  import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+		  import com.google.android.gms.common.api.ApiException;
+		  import com.google.android.gms.tasks.Task;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCloudMessaging">
+	  <true>
+		<insert>
+		  import com.google.firebase.messaging.MessageForwardingService;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+		  import io.fabric.sdk.android.Fabric;
+		  import com.crashlytics.android.Crashlytics;
+		  import com.crashlytics.android.ndk.CrashlyticsNdk;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableInAppMessaging">
+	  <true>
+		<insert>
+		  import com.google.firebase.inappmessaging.FirebaseInAppMessaging;
+		  import com.google.firebase.inappmessaging.display.internal.FirebaseInAppMessagingDisplayImpl;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnablePerformanceMonitoring">
+	  <true>
+		<insert>
+		  import com.google.firebase.perf.FirebasePerformance;
+		  import com.google.firebase.perf.metrics.Trace;
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableTestLab">
+	  <true>
+		<insert>
+			import com.google.android.libraries.cloudtesting.screenshots.ScreenShotter;
+		</insert>
+	  </true>
+	</if>
+  </gameActivityImportAdditions>
+
+  <gameActivityOnNewIntentAdditions>
+	<if condition="bEnableCloudMessaging">
+	  <true>
+		<insert>
+			Intent message = new Intent(GameActivity._activity, MessageForwardingService.class);
+			message.setAction(MessageForwardingService.ACTION_REMOTE_INTENT);
+			message.putExtras(newIntent);
+			message.setData(newIntent.getData());
+			startService(message);
+		</insert>
+	  </true>
+	</if>
+  </gameActivityOnNewIntentAdditions>
+
+  <gameActivityClassAdditions>
+	<if condition="bEnableAuthentication">
+	  <true>
+		<insert>
+		   public static final int FIREBASE_GOOGLE_SIGN_IN_ACTIVITY_ID = 85671; 
+
+		   public void AndroidThunkJava_FirebaseGoogleSignIn()
+		   {
+		      GameActivity._activity.runOnUiThread(new Runnable() {
+                 @Override
+                 public void run() {
+				    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+																  .requestIdToken(getString(getResources().getIdentifier("default_web_client_id", "string", getPackageName())))
+																  .requestServerAuthCode(getString(getResources().getIdentifier("default_web_client_id", "string", getPackageName())))
+                                                                  .requestEmail()
+                                                                  .build();
+
+					GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(GameActivity._activity, gso);
+					Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+				    startActivityForResult(signInIntent, FIREBASE_GOOGLE_SIGN_IN_ACTIVITY_ID);
+				}
+			  });
+		   }
+
+		   public native void nativeOnGoogleSignIn(String IdToken, String serverAuthCode);
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+		  public boolean CrashlyticsInitialized = false;
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsForceCrash()
+		  {
+			  Crashlytics.getInstance().crash();
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsForceException()
+		  {
+			  throw new RuntimeException("This is a crash");
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetUserIdentifier(String Identifier)
+		  {
+			  Crashlytics.setUserIdentifier(Identifier);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetUsername(String Username)
+		  {
+			  Crashlytics.setUserName(Username);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetUserEmail(String Email)
+		  {
+			  Crashlytics.setUserEmail(Email);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsWriteLog(String Log)
+		  {
+			  Crashlytics.log(Log);
+		  }
+		  
+		  public void AndroidThunkJava_FirebaseCrashlyticsWriteLogWithTagAndPriority(String Log, String Tag, int Priority)
+		  {
+			  Crashlytics.log(Priority, Tag, Log);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetString(String Key, String Value)
+		  {
+			  Crashlytics.setString(Key, Value);
+		  }
+		  
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetBool(String Key, boolean Value)
+		  {
+			  Crashlytics.setBool(Key, Value);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetFloat(String Key, float Value)
+		  {
+			  Crashlytics.setFloat(Key, Value);
+		  }
+
+		  public void AndroidThunkJava_FirebaseCrashlyticsSetInteger(String Key, int Value)
+		  {
+			  Crashlytics.setInt(Key, Value);
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableInAppMessaging">
+	  <true>
+		<insert>
+		  public void AndroidThunkJava_FirebaseSetAutomaticDataCollectionEnabled(boolean Enabled)
+		  {
+			  FirebaseInAppMessaging.getInstance().setAutomaticDataCollectionEnabled(Enabled);
+
+			  Log.debug("Firebase Set Automatic Data Collection Enabled: " + Boolean.toString(Enabled));
+		  }
+
+		  public void AndroidThunkJava_FirebaseSetMessagesSuppressed(boolean Suppressed)
+		  {
+			  FirebaseInAppMessaging.getInstance().setMessagesSuppressed(Suppressed);
+
+			  Log.debug("Firebase Set Message Suppressed: " + Boolean.toString(Suppressed));
+		  }
+
+		  public boolean AndroidThunkJava_FirebaseIsAutomaticDataCollectionEnabled()
+		  {
+			  return FirebaseInAppMessaging.getInstance().isAutomaticDataCollectionEnabled();
+		  }
+
+		  public boolean AndroidThunkJava_FirebaseAreMessagesSuppressed()
+		  {
+			  return FirebaseInAppMessaging.getInstance().areMessagesSuppressed();
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnablePerformanceMonitoring">
+	  <true>
+		<insert>
+		  HashMap&lt;String, Trace&gt; FirebaseTraceMap = new HashMap&lt;String, Trace&gt;();
+
+		  public void AndroidThunkJava_FirebaseStartPerformanceTrace(String TraceName)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.stop();
+					  FirebaseTraceMap.remove(TraceName);
+				  }
+			  }
+
+			  FirebaseTraceMap.put(TraceName, FirebasePerformance.getInstance().startTrace(TraceName));
+			  Log.debug("Firebase Performance Monitoring Start Trace: " + TraceName);
+		  }
+
+		  public void AndroidThunkJava_FirebaseStopPerformanceTrace(String TraceName)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.stop();
+					  FirebaseTraceMap.remove(TraceName);
+					  Log.debug("Firebase Performance Monitoring Stop Trace: " + TraceName);
+					  return;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+		  }
+
+		  public void AndroidThunkJava_FirebaseIncrementPerformanceTraceMetric(String TraceName, String MetricName, int IncrementValue)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.incrementMetric(MetricName, IncrementValue);
+					  Log.debug("Firebase Performance Monitoring Increment Metric: " + TraceName + ", Metric Name: " + MetricName + ", Increment Value: " + Integer.toString(IncrementValue));
+					  return;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+		  }
+
+		  public void AndroidThunkJava_FirebasePutPerformanceTraceMetric(String TraceName, String MetricName, int Value)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.putMetric(MetricName, Value);
+					  Log.debug("Firebase Performance Monitoring Put Metric: " + TraceName + ", Metric Name: " + MetricName + ", Value: " + Integer.toString(Value));
+					  return;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+		  }
+
+		  public long AndroidThunkJava_FirebaseGetPerformanceTraceMetric(String TraceName, String MetricName)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  long MetricValue = FirebaseTrace.getLongMetric(MetricName);
+					  Log.debug("Firebase Performance Monitoring Get Metric: " + TraceName + ", Metric Name: " + MetricName + ", Value: " + Long.toString(MetricValue));
+					  return MetricValue;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+			  return 0;
+		  }
+
+		  public void AndroidThunkJava_FirebasePutPerformanceTraceAttribute(String TraceName, String Attribute, String Value)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.putAttribute(Attribute, Value);
+					  Log.debug("Firebase Performance Monitoring Put Attribute: " + TraceName + ", Attribute: " + Attribute + ", Value: " + Value);
+					  return;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+		  }
+
+		  public void AndroidThunkJava_FirebaseRemovePerformanceTraceAttribute(String TraceName, String Attribute)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  FirebaseTrace.removeAttribute(Attribute);
+					  Log.debug("Firebase Performance Monitoring Remove Attribute: " + TraceName + ", Attribute: " + Attribute);
+					  return;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+		  }
+
+		  public String AndroidThunkJava_FirebaseGetPerformanceTraceAttribute(String TraceName, String Attribute)
+		  {
+			  if(FirebaseTraceMap.containsKey(TraceName))
+			  {
+				  Trace FirebaseTrace = FirebaseTraceMap.get(TraceName);
+				  if(FirebaseTrace != null)
+				  {
+					  String AttributeValue = FirebaseTrace.getAttribute(Attribute);
+					  Log.debug("Firebase Performance Monitoring Get Attribute: " + TraceName + ", Attribute: " + Attribute + ", Value: " + AttributeValue);
+					  return AttributeValue;
+				  }
+			  }
+			  
+			  Log.debug("Firebase Performance Monitoring Trace not initialized: " + TraceName);
+			  return "";
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableStorage">
+	  <true>
+		<insert>
+		  private static String getFirebaseAbsolutePath(File file) 
+		  {
+			  return (file != null) ? file.getAbsolutePath() : null;
+		  }
+	
+		  public String AndroidThunkJava_FirebaseGetPlatformStoragePath()
+		  {
+			  String path = _activity.getFirebaseAbsolutePath(_activity.getFilesDir());
+			  
+			  if(path != null)
+			  {
+			      return ("file://" + path + "/");
+			  }
+		  
+		      return "";
+		  }
+
+		  public boolean AndroidThunkJava_FirebaseUseExternalFilesDir()
+		  {
+			  return UseExternalFilesDir;
+		  }
+		</insert>
+	  </true>
+	</if>
+	<if condition="bEnableTestLab">
+	  <true>
+		<insert>
+		  public void AndroidThunkJava_FirebaseTestLabTakeScreenshot(String Label)
+		  {
+			  ScreenShotter.takeScreenshot(Label, GameActivity._activity);
+		  }
+
+		  public void AndroidThunkJava_FirebaseTestLabFinishTest()
+		  {
+			  GameActivity._activity.finish();
+		  }
+
+		  public int AndroidThunkJava_FirebaseTestLabGetGameLoopScenario()
+		  {
+			   Intent TestLabLaunchIntent = getIntent();
+			   if(TestLabLaunchIntent != null &amp;&amp; TestLabLaunchIntent.getAction().equals("com.google.intent.action.TEST_LOOP")) 
+		       {
+			      return TestLabLaunchIntent.getIntExtra("scenario", 0);
+		       }
+
+			   return 0;
+		  }
+		</insert>
+	  </true>
+	</if>
+  </gameActivityClassAdditions>
+
+  <gameActivityOnActivityResultAdditions>
+	<if condition="bEnableAuthentication">
+	  <true>
+		<insert>
+		  if (requestCode == FIREBASE_GOOGLE_SIGN_IN_ACTIVITY_ID) 
+		  {
+			  Task&lt;GoogleSignInAccount&gt; GoogleSignInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+			  try 
+			  {
+				  GoogleSignInAccount GoogleAccount = GoogleSignInTask.getResult(ApiException.class);
+				  String GoogleAccountIdToken = GoogleAccount.getIdToken();
+				  String GoogleAccountServerAuthCode = GoogleAccount.getServerAuthCode();
+				  Log.debug("Google Sign In is successful. Id Token: " + GoogleAccountIdToken + ", Server Auth Code: " + GoogleAccountServerAuthCode);  
+				  nativeOnGoogleSignIn(GoogleAccountIdToken, GoogleAccountServerAuthCode);
+				  return;
+			   } 
+			   catch (ApiException e) 
+			   {
+				  Log.debug("Google Sign In not successful: " + e.getStatusMessage());  
+				  nativeOnGoogleSignIn("FAILURE", "FAILURE");
+				  return;
+			   }
+		  }
+		</insert>
+	  </true>
+	</if>
+  </gameActivityOnActivityResultAdditions>
+
+  <gameActivityOnCreateAdditions>
+	<if condition="bEnableCrashlytics">
+	  <true>
+		<insert>
+		    final Fabric fabric = new Fabric.Builder(this)
+											.kits(new Crashlytics(), new CrashlyticsNdk())
+										    .debuggable(</insert><if condition="bEnableCrashlyticsDebugMode"><true><insert>true</insert></true><false><insert>false</insert></false></if><insert>)
+										    .build();
+			Fabric.with(fabric);
+		</insert>
+	  </true>
+	</if>
+  </gameActivityOnCreateAdditions>
+
+  <androidManifestUpdates>
+	<addElements tag="application">
+	   <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_ic_notification" />
+	   <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+	</addElements>
+
+	<if condition="bEnableAnalytics">
+	  <false>
+		<addElements tag="application">
+		  <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+		  <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+		</addElements>
+	  </false>
+	</if>
+
+	<if condition="bEnablePerformanceMonitoring">
+	  <true>
+		<addElements tag="application">
+		  <meta-data android:name="firebase_performance_logcat_enabled" android:value="true" />
+		</addElements>
+	  </true>
+	  <false>
+		<addElements tag="application">
+		  <meta-data android:name="firebase_performance_collection_deactivated" android:value="true" />
+		</addElements>
+	  </false>
+	</if>
+
+	<if condition="bEnableCloudMessaging">
+	  <true>
+		<addElements tag="application">
+		  <service android:name="com.google.firebase.messaging.cpp.ListenerService"
+				android:exported="false" >
+			<intent-filter>
+			  <action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		  </service>
+
+		  <service android:name="com.google.firebase.messaging.cpp.FcmInstanceIDListenerService"
+				   android:exported="false" >
+			<intent-filter>
+			  <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+			</intent-filter>
+		  </service>
+
+		  <service android:name="com.google.firebase.messaging.cpp.RegistrationIntentService" android:exported="false" >
+		  </service>
+		</addElements>
+	  </true>
+	</if>
+
+	<if condition="bEnableTestLab">
+	  <true>
+		<loopElements tag="activity">
+		  <setStringFromAttribute result="activityName" tag="$" name="android:name"/>
+		  <setBoolIsEqual result="bSplashActivity" arg1="$S(activityName)" arg2="com.epicgames.ue4.SplashActivity"/>
+		  <if condition="bSplashActivity">
+			<true>
+			  <addElements tag="$">
+				<intent-filter>
+				  <action android:name="com.google.intent.action.TEST_LOOP"/>
+				  <category android:name="android.intent.category.DEFAULT"/>
+				  <data android:mimeType="application/javascript"/>
+				</intent-filter>
+			  </addElements>
+			</true>
+		  </if>
+		</loopElements>
+		<addElements tag="application">
+		  <meta-data android:name="com.google.test.loops" />
+		</addElements>
+		<loopElements tag="meta-data">
+		  <setStringFromAttribute result="testLoopsName" tag="$" name="android:name"/>
+		  <setBoolIsEqual result="bTestLoopsName" arg1="$S(testLoopsName)" arg2="com.google.test.loops"/>
+		  <if condition="bTestLoopsName">
+			<true>
+			  <addAttribute tag="$" name="android:value" value="$I(NumberOfGameLoops)"/>
+			</true>
+		  </if>
+		</loopElements>
+	  </true>
+	</if>
+  </androidManifestUpdates>
+</root>

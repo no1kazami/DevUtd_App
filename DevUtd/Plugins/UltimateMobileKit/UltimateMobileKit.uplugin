@@ -1,0 +1,55 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.12.0",
+  "FriendlyName": "Ultimate Mobile Kit",
+  "Description": "Firebase mobile features integration for iOS & Android",
+  "Category": "Mobile",
+  "CreatedBy": "gameDNA Ltd",
+  "CreatedByURL": "http://gamednastudio.com",
+  "DocsURL": "http://gamednastudio.com/plugins/docs/UltimateMobileKit_UserGuide.pdf",
+  "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/1e8a87fa960a4eaea9f2edac4aeadbf5",
+  "EngineVersion": "4.23.0",
+  "SupportURL": "mailto:support@gamednastudio.com",
+  "Modules": [
+	  {
+		"Name": "UltimateMobileKit",
+		"Type": "Runtime",
+		"LoadingPhase": "Default",
+		"WhitelistPlatforms": [
+		  "Win64",
+		  "Win32",
+		  "Linux",
+		  "Mac",
+		  "IOS",
+		  "Android"
+		]
+	  },
+	  {
+		"Name": "UltimateMobileKitEditor",
+		"Type": "Editor",
+		"LoadingPhase": "Default",
+		"WhitelistPlatforms": [
+		  "Win64",
+		  "Win32",
+		  "Linux",
+		  "Mac"
+		]
+	  }
+  ],
+  "Plugins": [
+	{
+		"Name": "OnlineSubsystem",
+		"Enabled": true
+	},
+	{
+		"Name": "OnlineSubsystemUtils",
+		"Enabled": true
+	}
+  ],
+  "EnabledByDefault": true,
+  "CanContainContent": false,
+  "IsBetaVersion": false,
+  "Installed": true,
+  "RequiresBuildPlatform": true
+}

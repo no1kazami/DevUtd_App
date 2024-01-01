@@ -1,0 +1,48 @@
+// Ultimate Mobile Kit
+// Created by Patryk Stepniewski
+// Copyright (c) 2014-2019 gameDNA Ltd. All Rights Reserved.
+
+#include "UltimateMobileKitSettings.h"
+
+UUltimateMobileKitSettings::UUltimateMobileKitSettings(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, FirebaseBundleIdAndroid("")
+	, FirebaseAppIdAndroid("")
+	, FirebaseClientIdAndroid()
+	, FirebaseApiKeyAndroid("")
+	, FirebaseCloudMessagingSenderIdAndroid("")
+	, FirebaseGoogleCloudStorageBucketNameAndroid("")
+	, FirebaseDatabaseURLAndroid("")
+	, FirebaseBundleIdIOS("")
+	, FirebaseAppIdIOS("")
+	, FirebaseClientIdIOS("")
+	, FirebaseReversedClientIdIOS("")
+	, FirebaseApiKeyIOS("")
+	, FirebaseProjectIdIOS("")
+	, FirebaseCloudMessagingSenderIdIOS("")
+	, FirebaseGoogleCloudStorageBucketNameIOS("")
+	, FirebaseDatabaseURLIOS("")
+	, bEnableAnalytics(false)
+	, bEnableAuthentication(false)
+	, bEnableCloudMessaging(false)
+	, bEnableCrashlytics(false)
+	, bEnableLinksInvites(false)
+	, bEnableInAppMessaging(false)
+	, bEnableInstanceId(false)
+	, bEnableRemoteConfig(false)
+	, bEnablePerformanceMonitoring(false)
+	, bEnableStorage(false)
+	, bEnableTestLab(false)
+	, bEnableDataBase_CKH(false)
+	, MinimumSessionDuration(10000)
+	, SessionTimeoutDuration(1800000)
+	, bEnableCrashlyticsAutoAndroidSymbolsUploadDevelopment(false)
+	, bEnableCrashlyticsAutoAndroidSymbolsUploadShipping(false)
+	, bEnableCrashlyticsDebugMode(false)
+	, bEnableRemoteConfigDeveloperMode(false)
+	, MaxDownloadRetryTime(600)
+	, MaxOperationRetryTime(120)
+	, MaxUploadRetryTime(600)
+	, NumberOfGameLoops(1) 
+{
+}

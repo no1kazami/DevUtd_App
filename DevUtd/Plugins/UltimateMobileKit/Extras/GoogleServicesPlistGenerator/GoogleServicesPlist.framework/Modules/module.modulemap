@@ -1,0 +1,6 @@
+framework module GoogleServicesPlist {
+  umbrella header "GoogleServicesPlist.h"
+
+  export *
+  module * { export * }
+}

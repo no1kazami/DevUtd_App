@@ -1,0 +1,44 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# ignore all files in the directory
+DevUtd/Intermediate
+DevUtd/.vs
+DevUtd/Saved
+DevUtd/Binaries
+DevUtd/Build
+DevUtd/DerivedDataCache
+DevUtd/Plugins/gameDNAinstaller/Binaries
+DevUtd/Plugins/gameDNAinstaller/Intermediate
+DevUtd/Plugins/MobileUtils/Binaries
+DevUtd/Plugins/MobileUtils/Intermediate
+DevUtd/Plugins/UltimateMobileKit/Binaries
+DevUtd/Plugins/UltimateMobileKit/Intermediate
+
+# ignore files
+DevUtd/Bigtamin.sln

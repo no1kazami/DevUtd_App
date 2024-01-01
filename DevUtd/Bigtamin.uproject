@@ -1,0 +1,47 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{CC44B40A-4845-165F-40FD-968538C5B306}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Bigtamin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"UMG",
+				"CoreUObject"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SteamVR",
+			"Enabled": false
+		},
+		{
+			"Name": "OculusVR",
+			"Enabled": false
+		},
+		{
+			"Name": "gameDNAinstaller",
+			"Enabled": true
+		},
+		{
+			"Name": "UltimateMobileKit",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/1e8a87fa960a4eaea9f2edac4aeadbf5"
+		},
+		{
+			"Name": "MobileUtils",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/94e8f674898a4589882c283436190676"
+		}
+	],
+	"TargetPlatforms": [
+		"AllDesktop",
+		"Android",
+		"IOS"
+	]
+}
