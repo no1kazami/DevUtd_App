@@ -54,6 +54,13 @@ private:
 	UPROPERTY( meta = (BindWidget) )
 		UTextBlock* C_Txt_Value3;
 
+	UPROPERTY( meta = (BindWidget) )
+		UGridPanel* C_Grid_Rank1;
+	UPROPERTY( meta = (BindWidget) )
+		UGridPanel* C_Grid_Rank2;
+	UPROPERTY( meta = (BindWidget) )
+		UGridPanel* C_Grid_Rank3;
+
 	FString _PlayerName1;
 	FString _PlayerName2;
 	FString _PlayerName3;

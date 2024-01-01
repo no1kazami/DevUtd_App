@@ -28,6 +28,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Spacer.h"
 #include "Components/ScaleBox.h"
+#include "Components/GridPanel.h"
 #include "BWidget.generated.h"
 
 #ifdef Bind_Pressed_Function_Button

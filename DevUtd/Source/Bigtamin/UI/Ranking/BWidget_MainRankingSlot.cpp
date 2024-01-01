@@ -2,6 +2,7 @@
 #include "Bigtamin.h"
 #include "GameMode/BGameMode_main.h"
 #include "UI/Ranking/BWidget_RankingMain.h"
+#include "../../FBM_SaveGame.h"
 
 #define SHOW_RANK_NUM 3
 
@@ -21,7 +22,7 @@ void UBWidget_MainRankingSlot::Init()
 
 void UBWidget_MainRankingSlot::OnClose()
 {
-	Super::OnClose();
+	Super::OnClose(); 
 }
 
 void UBWidget_MainRankingSlot::SetData( const E_RANKING_TYPE rankingType )
@@ -906,6 +907,17 @@ void UBWidget_MainRankingSlot::_SetDataYearMvp()
 				}
 			}
 		}
+
+		if( MvpDataList[CurYearIndex].Name.Num() == 2 )
+		{
+			C_Grid_Rank3->SetVisibility( ESlateVisibility::Collapsed );
+		}
+		else if( MvpDataList[CurYearIndex].Name.Num() == 1 )
+		{
+			C_Grid_Rank2->SetVisibility( ESlateVisibility::Collapsed );
+			C_Grid_Rank3->SetVisibility( ESlateVisibility::Collapsed );
+		}
+		
 	}
 	else
 	{

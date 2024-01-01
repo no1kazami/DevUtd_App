@@ -1996,9 +1996,9 @@ void UFBM_SaveGame::_SetMvpData_Windows()
 	{
 		FST_YEAR_MVP_DATA mvpData;
 		mvpData.Year = FString( TEXT( "2023" ) );
-		mvpData.Name.Add(FString( TEXT( "허승" ) ));
-		mvpData.Name.Add( FString( TEXT( "김지훈" ) ) );
-		mvpData.Name.Add( FString( TEXT( "장희남" ) ) );
+		mvpData.Name.Add(FString( TEXT( "최경희" ) ));
+		mvpData.Name.Add( FString( TEXT( "고정민" ) ) );
+		//mvpData.Name.Add( FString( TEXT( "장희남" ) ) );
 		_YearMvpData.Add( mvpData );
 	}
 #endif
