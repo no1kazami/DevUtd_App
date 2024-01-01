@@ -711,6 +711,7 @@ struct FST_PLAYER_DATA
 	UPROPERTY() uint32 TopAssistNum;      // 도움왕 횟수
 	UPROPERTY() uint32 TopAttendanceNum;  // 출석왕 횟수
 	UPROPERTY() uint32 TopPointNum;       // 공격포인트왕 횟수
+	UPROPERTY() uint32 TopDefenceNum;     // 수비왕 횟수
 
 	UPROPERTY()	TMap<FString, int32> GoalNum;            // 전체 골
 	UPROPERTY()	TMap<FString, int32> GoalNum_AMatch;     // A-Match 골
@@ -741,6 +742,7 @@ struct FST_PLAYER_DATA
 		TopAssistNum = 0;
 		TopAttendanceNum = 0;
 		TopPointNum = 0;
+		TopDefenceNum = 0;
 
 		RecentDayGoalNum.Empty();
 		RecentWeekGoalNum.Empty();
@@ -964,6 +966,7 @@ struct FST_YEAR_KING_DATA
 	UPROPERTY() FString AssistKing;    // 어시왕
 	UPROPERTY() FString TotalPointKing;// 공격 포인트
 	UPROPERTY() FString AttendanceKing;// 출석왕
+	UPROPERTY() FString DefenceKing;   // 수비왕
 };
 
 // Staff 정보 데이터

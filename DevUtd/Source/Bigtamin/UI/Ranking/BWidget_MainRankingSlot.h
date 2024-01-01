@@ -15,6 +15,8 @@ public:
 	TScriptDelegate <FWeakObjectPtr> OnFailDownLoadPlayerImage2;
 	TScriptDelegate <FWeakObjectPtr> OnSuccessDownLoadPlayerImage3;
 	TScriptDelegate <FWeakObjectPtr> OnFailDownLoadPlayerImage3;
+	TScriptDelegate <FWeakObjectPtr> OnSuccessDownLoadPlayerImage4;
+	TScriptDelegate <FWeakObjectPtr> OnFailDownLoadPlayerImage4;
 
 private:
 	UPROPERTY( meta = (BindWidget) )
@@ -55,15 +57,29 @@ private:
 		UTextBlock* C_Txt_Value3;
 
 	UPROPERTY( meta = (BindWidget) )
+		UWidgetSwitcher* C_WS_Medal4;
+	UPROPERTY( meta = (BindWidget) )
+		UImage* C_Img_Person4;
+	UPROPERTY( meta = (BindWidget) )
+		UTextBlock* C_Txt_Name4;
+	UPROPERTY( meta = (BindWidget) )
+		UTextBlock* C_Txt_Team4;
+	UPROPERTY( meta = (BindWidget) )
+		UTextBlock* C_Txt_Value4;
+
+	UPROPERTY( meta = (BindWidget) )
 		UGridPanel* C_Grid_Rank1;
 	UPROPERTY( meta = (BindWidget) )
 		UGridPanel* C_Grid_Rank2;
 	UPROPERTY( meta = (BindWidget) )
 		UGridPanel* C_Grid_Rank3;
+	UPROPERTY( meta = (BindWidget) )
+		UGridPanel* C_Grid_Rank4;
 
 	FString _PlayerName1;
 	FString _PlayerName2;
 	FString _PlayerName3;
+	FString _PlayerName4;
 
 	E_RANKING_TYPE _RankType;
 
@@ -80,6 +96,8 @@ private:
 	UFUNCTION() void _OnFailDownLoadPlayerImage2( UTexture2DDynamic* texturl );
 	UFUNCTION() void _OnSuccessDownLoadPlayerImage3( UTexture2DDynamic* texturl );
 	UFUNCTION() void _OnFailDownLoadPlayerImage3( UTexture2DDynamic* texturl );
+	UFUNCTION() void _OnSuccessDownLoadPlayerImage4( UTexture2DDynamic* texturl );
+	UFUNCTION() void _OnFailDownLoadPlayerImage4( UTexture2DDynamic* texturl );
 	UFUNCTION()	void _OnClick_MoreBtn();
 
 	void _SetDataAttendance();

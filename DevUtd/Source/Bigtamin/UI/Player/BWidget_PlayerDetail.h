@@ -70,6 +70,8 @@ private:
 	UPROPERTY( meta = (BindWidget) )
 		UTextBlock* C_Txt_Rank_TotalPoint;
 	UPROPERTY( meta = (BindWidget) )
+		UTextBlock* C_Txt_Rank_Defence;
+	UPROPERTY( meta = (BindWidget) )
 		TWeakObjectPtr<UScrollBox>  C_ScrollBox_Detail;
 
 	UWidgetAnimation* _Ani_DetailOpen;

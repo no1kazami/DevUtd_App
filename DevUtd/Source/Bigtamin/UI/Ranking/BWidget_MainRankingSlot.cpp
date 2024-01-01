@@ -16,6 +16,8 @@ void UBWidget_MainRankingSlot::Init()
 	OnFailDownLoadPlayerImage2.BindUFunction( this, "_OnFailDownLoadPlayerImage2" );
 	OnSuccessDownLoadPlayerImage3.BindUFunction( this, "_OnSuccessDownLoadPlayerImage3" );
 	OnFailDownLoadPlayerImage3.BindUFunction( this, "_OnFailDownLoadPlayerImage3" );
+	OnSuccessDownLoadPlayerImage4.BindUFunction( this, "_OnSuccessDownLoadPlayerImage4" );
+	OnFailDownLoadPlayerImage4.BindUFunction( this, "_OnFailDownLoadPlayerImage4" );
 
 	ButtonDelegate_Clicked( this, C_Btn_More, &UBWidget_MainRankingSlot::_OnClick_MoreBtn );
 }
@@ -33,6 +35,9 @@ void UBWidget_MainRankingSlot::SetData( const E_RANKING_TYPE rankingType )
 	C_WS_Medal1->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
 	C_WS_Medal2->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
 	C_WS_Medal3->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
+
+	C_Grid_Rank4->SetVisibility( ESlateVisibility::Collapsed );
+
 	switch (rankingType)
 	{
 	case E_RANKING_TYPE::E_RANKING_TYPE_GOAL:
@@ -57,9 +62,11 @@ void UBWidget_MainRankingSlot::SetData( const E_RANKING_TYPE rankingType )
 	case E_RANKING_TYPE::E_RANKING_TYPE_YEAR_KING:
 		_SetDataYearKing();
 		C_Btn_More->SetVisibility( ESlateVisibility::Hidden );
+		C_Grid_Rank4->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
 		C_WS_Medal1->SetVisibility( ESlateVisibility::Collapsed );
 		C_WS_Medal2->SetVisibility( ESlateVisibility::Collapsed );
 		C_WS_Medal3->SetVisibility( ESlateVisibility::Collapsed );
+		C_WS_Medal4->SetVisibility( ESlateVisibility::Collapsed );
 		break;
 	default:
 		break;
@@ -113,6 +120,23 @@ void UBWidget_MainRankingSlot::_OnSuccessDownLoadPlayerImage3( UTexture2DDynamic
 }
 
 void UBWidget_MainRankingSlot::_OnFailDownLoadPlayerImage3( UTexture2DDynamic* texturl )
+{
+
+}
+
+void UBWidget_MainRankingSlot::_OnSuccessDownLoadPlayerImage4( UTexture2DDynamic* texturl )
+{
+	if( texturl != nullptr )
+	{
+		GInst->SetDownLoadPlayerImage( _PlayerName4, texturl );
+		if( C_Img_Person4 != nullptr )
+		{
+			C_Img_Person4->SetBrushFromTextureDynamic( texturl, false );
+		}
+	}
+}
+
+void UBWidget_MainRankingSlot::_OnFailDownLoadPlayerImage4( UTexture2DDynamic* texturl )
 {
 
 }
@@ -1010,16 +1034,16 @@ void UBWidget_MainRankingSlot::_SetDataYearKing()
 			}
 		}
 
-		// 출석왕
-		if( !KingDataList[CurYearIndex].AttendanceKing.IsEmpty())
+		// 수비왕
+		if( !KingDataList[CurYearIndex].DefenceKing.IsEmpty() )
 		{
-			const FST_PLAYER_DATA* playerData3 = UFBM_SaveGame::Get().GetPlayerData_DB_ByName( KingDataList[CurYearIndex].AttendanceKing );
+			const FST_PLAYER_DATA* playerData3 = UFBM_SaveGame::Get().GetPlayerData_DB_ByName( KingDataList[CurYearIndex].DefenceKing );
 			if( playerData3 )
 			{
-				C_Txt_Name3->SetText( FText::FromString( KingDataList[CurYearIndex].AttendanceKing ) );
+				C_Txt_Name3->SetText( FText::FromString( KingDataList[CurYearIndex].DefenceKing ) );
 				C_Txt_Team3->SetText( GET_BTEXT( UFBM_SaveGame::Get().GetDevUtdTeamStrIndex( playerData3->TeamName ) ) );
 				C_Txt_Team3->SetColorAndOpacity( UFBM_SaveGame::Get().GetDevUtdTeamColor( playerData3->TeamName ) );
-				C_Txt_Value3->SetText( GET_BTEXT( 38 ) );
+				C_Txt_Value3->SetText( GET_BTEXT( 59 ) );
 				C_Txt_Value3->SetColorAndOpacity( Color_BootsCompare_Red );
 				C_WS_Medal3->SetVisibility( ESlateVisibility::Hidden );
 				_PlayerName3 = playerData3->PlayerName;
@@ -1037,6 +1061,38 @@ void UBWidget_MainRankingSlot::_SetDataYearKing()
 					if( picturlURL3.IsEmpty() == false )
 					{
 						DownLoadTexture_URL( picturlURL3, OnSuccessDownLoadPlayerImage3, OnFailDownLoadPlayerImage3 );
+					}
+				}
+			}
+		}
+
+		// 출석왕
+		if( !KingDataList[CurYearIndex].AttendanceKing.IsEmpty())
+		{
+			const FST_PLAYER_DATA* playerData4 = UFBM_SaveGame::Get().GetPlayerData_DB_ByName( KingDataList[CurYearIndex].AttendanceKing );
+			if( playerData4 )
+			{
+				C_Txt_Name4->SetText( FText::FromString( KingDataList[CurYearIndex].AttendanceKing ) );
+				C_Txt_Team4->SetText( GET_BTEXT( UFBM_SaveGame::Get().GetDevUtdTeamStrIndex( playerData4->TeamName ) ) );
+				C_Txt_Team4->SetColorAndOpacity( UFBM_SaveGame::Get().GetDevUtdTeamColor( playerData4->TeamName ) );
+				C_Txt_Value4->SetText( GET_BTEXT( 38 ) );
+				C_Txt_Value4->SetColorAndOpacity( Color_BootsCompare_Red );
+				C_WS_Medal4->SetVisibility( ESlateVisibility::Hidden );
+				_PlayerName4 = playerData4->PlayerName;
+				UTexture2DDynamic* playerImg4 = GInst->GetDownLoadPlayerImage( playerData4->PlayerName );
+				if( playerImg4 != nullptr )
+				{
+					if( C_Img_Person4 != nullptr )
+					{
+						C_Img_Person4->SetBrushFromTextureDynamic( playerImg4, false );
+					}
+				}
+				else
+				{
+					const FString picturlURL4 = playerData4->PictureURL;
+					if( picturlURL4.IsEmpty() == false )
+					{
+						DownLoadTexture_URL( picturlURL4, OnSuccessDownLoadPlayerImage4, OnFailDownLoadPlayerImage4 );
 					}
 				}
 			}

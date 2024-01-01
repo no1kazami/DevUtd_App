@@ -1,6 +1,7 @@
 #include "BWidget_PlayerDetail.h"
 #include "UI/BWidget_Top.h"
 #include "../../FBM_SaveGame.h"
+#include "../Boots/BWidget_BootsOptionSlot.h"
 #include "Bigtamin.h"
 #include "UI/Player/BWidget_PlayerChart.h"
 
@@ -8,8 +9,8 @@ void UBWidget_PlayerDetail::Init()
 {
 	Super::Init();
 
-	OnSuccessDownLoadPlayerDetailImage.BindUFunction( this, "_OnSuccessDownLoadDetailImage" );
-	OnFailDownLoadPlayerDetailImage.BindUFunction( this, "_OnFailDownLoadDetailImage" );
+	OnSuccessDownLoadPlayerDetailImage.BindUFunction( this, "_OnSuccessDownLoadPlayerDetailImage" );
+	OnFailDownLoadPlayerDetailImage.BindUFunction( this, "_OnFailDownLoadPlayerDetailImage" );
 
 	BP_Top_PlayerDetail_UMG->Init();
 	BP_Top_PlayerDetail_UMG->ChangeTopMode( E_MODE::E_MODE_PLAYER_DETAIL );
@@ -91,6 +92,7 @@ void UBWidget_PlayerDetail::SetPlayerData( FString playerName )
 		C_Txt_Rank_Assist->SetText( FText::AsNumber( playerData->TopAssistNum ) );
 		C_Txt_Rank_Attendance->SetText( FText::AsNumber( playerData->TopAttendanceNum ) );
 		C_Txt_Rank_TotalPoint->SetText( FText::AsNumber( playerData->TopPointNum ) );
+		C_Txt_Rank_Defence->SetText( FText::AsNumber( playerData->TopDefenceNum ) );
 
 		UTexture2DDynamic* playerImg = GInst->GetDownLoadPlayerImage( playerName );
 		if( playerImg != nullptr )

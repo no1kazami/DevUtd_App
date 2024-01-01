@@ -2,6 +2,7 @@
 
 
 #include "DataBase_CKH/FirebaseDataBase_CKH.h"
+#include "DataBase_CKH/DataBaseInitialize_CKH.h"
 #include "UltimateMobileKitSettings.h"
 #include "UltimateMobileKit.h"
 #include "Util/FBMUtil.h"
@@ -863,6 +864,10 @@ bool FirebaseDataBase_CKH::GetDataBasePlayerData( const char* dbPath, TArray<FST
 						{
 							playerData.TopPointNum = snap.Child( "TopPointNum" ).value().int64_value();
 						}
+						if( snap.HasChild( "TopDefenceNum" ) )
+						{
+							playerData.TopDefenceNum = snap.Child( "TopDefenceNum" ).value().int64_value();
+						}
 
 						OutPlayerData.Add( playerData );
 					}
@@ -984,6 +989,10 @@ bool FirebaseDataBase_CKH::GetDataBaseYearKingData( const char* dbPath, TArray<F
 						if( snap.HasChild( "Attendance" ) )
 						{
 							kingData.AttendanceKing = FString( UTF8_TO_TCHAR( snap.Child( "Attendance" ).value().string_value() ) );
+						}
+						if( snap.HasChild( "Defence" ) )
+						{
+							kingData.DefenceKing = FString( UTF8_TO_TCHAR( snap.Child( "Defence" ).value().string_value() ) );
 						}
 						if( snap.HasChild( "Year" ) )
 						{

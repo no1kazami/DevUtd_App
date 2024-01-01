@@ -334,6 +334,11 @@ void UBWidget_RankingFilter::_ResetFilter_Stadium( const TArray<FString>& stadiu
 		const TArray<FST_MATCH_DATA> matchDataList = UFBM_SaveGame::Get().GetMatchData_DB();
 		for( auto& matchData : matchDataList )
 		{
+			if ( matchData.InfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE)
+			{
+				continue;
+			}
+
 			FString strYear = matchData.MatchDate.Left( 4 );
 			if( stadium.Key == matchData.Comment && _CurYear == strYear )
 			{
@@ -423,6 +428,11 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 		const TArray<FST_MATCH_DATA> matchDataList = UFBM_SaveGame::Get().GetMatchData_DB();
 		for( auto& matchData : matchDataList )
 		{
+			if( matchData.InfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE )
+			{
+				continue;
+			}
+
 			FString strYear = matchData.MatchDate.Left( 4 );
 			if( team.Key == matchData.AwayTeamName && _CurYear == strYear )
 			{

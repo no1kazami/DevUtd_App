@@ -1,6 +1,7 @@
 ﻿#include "BWidget_Notice.h"
 #include "UI/BWidget_Top.h"
 #include "BWidget_NoticeSlot.h"
+#include "../../FBM_SaveGame.h"
 #include "Bigtamin.h"
 
 void UBWidget_Notice::Init()
@@ -35,7 +36,7 @@ void UBWidget_Notice::InitNotice()
 	FST_NOTICE_DATA tempData1( TEXT( "2020-06-06" ), TEXT( "안녕하세요." ), TEXT( "반갑습니다.\n잘 부탁드립니다." ) );
 	FST_NOTICE_DATA tempData2( TEXT( "2020-06-04" ), TEXT( "Football Boots Manager에 오신것을 환영합니다." ), TEXT( "반갑습니다.\n잘 부탁드립니다." ) );
 	FST_NOTICE_DATA tempData3( TEXT( "2020-06-07" ), TEXT( "Football Boots Manager에 오신것을 환영합니다.2." ), TEXT( "반갑습니다.\n잘 부탁드립니다." ) );
-	FST_NOTICE_DATA tempData4( TEXT( "2019-12-06" ), TEXT( "안녕하세요." ), TEXT( "반갑습니다.\n잘 부탁드립니다." ) );
+	FST_NOTICE_DATA tempData4( TEXT( "2019-12-06" ), TEXT( "안녕하세요." ), TEXT( "반갑습니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다.\n잘 부탁드립니다." ) );
 	noticeData.Add( tempData1 );
 	noticeData.Add( tempData2 );
 	noticeData.Add( tempData3 );

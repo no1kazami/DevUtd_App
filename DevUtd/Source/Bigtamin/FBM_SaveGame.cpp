@@ -1573,6 +1573,18 @@ void UFBM_SaveGame::_SetStadiumData_Windows()
 		FST_STADIUM_INFO_DATA tempData3;
 		tempData3.StadiumName = FString( TEXT( "탄천 B 구장" ) );
 		_StadiumData.Add( tempData3 );
+
+		FST_STADIUM_INFO_DATA tempData4;
+		tempData4.StadiumName = FString( TEXT( "황송 공원 축구장" ) );
+		_StadiumData.Add( tempData4 );
+
+		FST_STADIUM_INFO_DATA tempData5;
+		tempData5.StadiumName = FString( TEXT( "상현 레스피아" ) );
+		_StadiumData.Add( tempData5 );
+
+		FST_STADIUM_INFO_DATA tempData6;
+		tempData6.StadiumName = FString( TEXT( "수지 체육공원" ) );
+		_StadiumData.Add( tempData6 );
 	}
 #endif
 }
@@ -1769,11 +1781,11 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 
 		FST_MATCH_DATA tempData14;
 		tempData14.MatchType = E_MATCH_TYPE::E_MATCH_TYPE_A_MATCH;
-		tempData14.InfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_RESULT;
+		tempData14.InfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE;
 		tempData14.HomeTeamName = TEXT( "DevUtd" );
-		tempData14.AwayTeamName = TEXT( "카카오" );
-		tempData14.Comment = TEXT( "탄천 A 구장" );
-		tempData14.MatchDate = TEXT( "20220215" );
+		tempData14.AwayTeamName = TEXT( "아프리카 TV" );
+		tempData14.Comment = TEXT( "황송 공원 축구장" );
+		tempData14.MatchDate = TEXT( "20221231" );
 		tempData14.MatchTime = TEXT( "20:00 ~ 22:00" );
 		tempData14.HomeGoal = 1;
 		tempData14.AwayGoal = 0;
@@ -1976,6 +1988,7 @@ void UFBM_SaveGame::_SetPlayerData_Windows()
 		tempData6.TeamName = FString( TEXT( "DevUtd 주황" ) );
 		tempData6.PictureURL = FString( TEXT( "" ) );
 		tempData6.MvpNum = 0;
+		tempData6.TopDefenceNum = 1;
 		_PlayerData.Add( tempData6 );
 
 		FST_PLAYER_DATA tempData7;
@@ -2016,6 +2029,7 @@ void UFBM_SaveGame::_SetKingData_Windows()
 		kingData.AssistKing = FString( TEXT( "최경희" ) );
 		kingData.TotalPointKing = FString( TEXT( "고정민" ) );
 		kingData.AttendanceKing = FString( TEXT( "채운정" ) );
+		kingData.DefenceKing = FString( TEXT( "장희남" ) );
 		_YearKingData.Add( kingData );
 	}
 #endif
