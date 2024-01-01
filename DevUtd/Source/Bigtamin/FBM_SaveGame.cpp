@@ -2,6 +2,7 @@
 
 #include "FBM_SaveGame.h"
 #include "Bigtamin.h"
+#include "Kismet/KismetStringLibrary.h"
 
 UFBM_SaveGame::UFBM_SaveGame()
 {
@@ -1994,7 +1995,7 @@ void UFBM_SaveGame::_SetMvpData_Windows()
 	if( _YearMvpData.Num() == 0 )
 	{
 		FST_YEAR_MVP_DATA mvpData;
-		mvpData.Year = FString( TEXT( "2021" ) );
+		mvpData.Year = FString( TEXT( "2023" ) );
 		mvpData.Name.Add(FString( TEXT( "허승" ) ));
 		mvpData.Name.Add( FString( TEXT( "김지훈" ) ) );
 		mvpData.Name.Add( FString( TEXT( "장희남" ) ) );
@@ -2010,7 +2011,7 @@ void UFBM_SaveGame::_SetKingData_Windows()
 	if( _YearKingData.Num() == 0 )
 	{
 		FST_YEAR_KING_DATA kingData;
-		kingData.Year = FString( TEXT( "2021" ) );
+		kingData.Year = FString( TEXT( "2023" ) );
 		kingData.GoalKing = FString( TEXT( "고정민" ) );
 		kingData.AssistKing = FString( TEXT( "최경희" ) );
 		kingData.TotalPointKing = FString( TEXT( "고정민" ) );

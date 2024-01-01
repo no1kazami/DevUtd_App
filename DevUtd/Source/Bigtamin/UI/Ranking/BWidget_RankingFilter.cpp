@@ -1,6 +1,7 @@
 ﻿#include "BWidget_RankingFilter.h"
 #include "BWidget_RankingMain.h"
 #include "../Equip/BWidget_EquipBootsFilterItem.h"
+#include "../../FBM_SaveGame.h"
 #include "Bigtamin.h"
 
 void UBWidget_RankingFilter::Init( UBWidget* OwnerUI )
@@ -425,6 +426,11 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 			FString strYear = matchData.MatchDate.Left( 4 );
 			if( team.Key == matchData.AwayTeamName && _CurYear == strYear )
 			{
+				if( bIsExceptionStadium && matchData.Comment == TEXT( "광주 문형 구장" ) )
+				{
+					continue;
+				}
+
 				if( _FilterInfo.StadiumTypes.Num() == 0 )
 				{
 					teamCount++;
@@ -433,11 +439,6 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 				{
 					for( auto& checkStadium : _FilterInfo.StadiumTypes )
 					{
-						if( bIsExceptionStadium && checkStadium == TEXT( "광주 문형 구장" ) )
-						{
-							continue;
-						}
-
 						if( checkStadium == matchData.Comment )
 						{
 							teamCount++;
