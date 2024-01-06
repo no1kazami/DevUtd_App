@@ -147,6 +147,7 @@ public:
 	void UpdateRecordData();
 
 	const TArray<FST_STADIUM_INFO_DATA>& GetStadiumData_DB();
+	const FST_STADIUM_INFO_DATA* GetStadiumData_DB_ByName( FString stadiumType );
 	const TArray<FST_TEAM_INFO_DATA>& GetTeamData_DB();
 	const FString GetTeamLogoURL_DB( FString teamName );
 	const TArray<FST_MATCH_DATA>& GetMatchData_DB();

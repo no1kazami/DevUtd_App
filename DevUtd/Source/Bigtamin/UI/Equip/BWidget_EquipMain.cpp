@@ -3,6 +3,8 @@
 #include "UI/Boots/BWidget_BootsSlot.h"
 #include "BWidget_EquipSort.h"
 #include "BWidget_EquipFilterItem.h"
+#include "BWidget_EquipBootsFilter.h"
+#include "../BWidget_Top.h"
 
 #define SCROLL_ITEM_NUM 30
 

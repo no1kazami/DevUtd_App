@@ -48,11 +48,13 @@ enum class E_MODE : uint8
 	E_MODE_FAQ,
 	E_MODE_RANKING_MAIN,
 	E_MODE_SCHEDULE_MAIN,
+	E_MODE_SCHEDULE_DETAIL,
 	E_MODE_RESULT_MAIN,
 	E_MODE_RESULT_DETAIL,
 	E_MODE_PLAYER_DETAIL,
 	E_MODE_PLAYER_COMPARE,
 	E_MODE_PLAYER_MAIN,
+	E_MODE_STADIUM_INFO,
 	E_MODE_MAX
 };
 
@@ -488,6 +490,7 @@ enum class E_MAINCATEGORY_TYPE : uint8
 	RESULT,
 	RANKING,
 	PLAYER,
+	STADIUM,
 	MAX
 };
 
@@ -582,11 +585,13 @@ enum class EBUIName : uint8
 	Faq		            UMETA( DisplayName = "Faq" ),
 	Ranking			    UMETA( DisplayName = "Ranking" ),
 	Schedule			UMETA( DisplayName = "Schedule" ),
+	ScheduleDetail	    UMETA( DisplayName = "ScheduleDetail" ),
 	Result			    UMETA( DisplayName = "Result" ),
 	ResultDetail	    UMETA( DisplayName = "ResultDetail" ),
 	PlayerDetail	    UMETA( DisplayName = "PlayerDetail" ),
 	PlayerCompare		UMETA( DisplayName = "PlayerCompare" ),
 	PlayerMain			UMETA( DisplayName = "PlayerMain" ),
+	StadiumInfo			UMETA( DisplayName = "StadiumInfo" ),
 	Max,
 };
 
@@ -625,7 +630,8 @@ enum class EDynamicWidgetParts : uint8
 	RankingSlot			        UMETA( DisplayName = "RankingSlot" ),
 	ResultDetailSlot			UMETA( DisplayName = "ResultDetailSlot" ),
 	PlayerChart			        UMETA( DisplayName = "PlayerChart" ),
-	PlayerSlot			    UMETA( DisplayName = "PlayerSlot" ),
+	PlayerSlot			        UMETA( DisplayName = "PlayerSlot" ),
+	StadiumInfoSlot			    UMETA( DisplayName = "StadiumInfoSlot" ),
 	Max,
 };
 

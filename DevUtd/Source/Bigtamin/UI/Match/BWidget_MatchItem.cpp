@@ -3,6 +3,7 @@
 #include "GameMode/BGameMode_main.h"
 #include "Bigtamin.h"
 #include "UI/Match/BWidget_ResultDetail.h"
+#include "UI/Match/BWidget_ScheduleDetail.h"
 
 void UBWidget_MatchItem::Init()
 {
@@ -184,9 +185,9 @@ void UBWidget_MatchItem::SetMatchItem( FST_MATCH_DATA matchData )
 	}
 }
 
-void UBWidget_MatchItem::SetShowDetail( const bool isShowDetail )
+void UBWidget_MatchItem::SetMatchInfoType( E_MATCH_INFO_TYPE matchInfoType )
 {
-	_IsDetailShow = isShowDetail;
+	_MatchInfoType = matchInfoType;
 }
 
 void UBWidget_MatchItem::_OnSuccessDownLoadHomeTeamLogoImage( UTexture2DDynamic* texturl )
@@ -225,16 +226,25 @@ void UBWidget_MatchItem::_OnFailDownLoadHomeAwayLogoImage( UTexture2DDynamic* te
 
 void UBWidget_MatchItem::_OnClick_ItemBtn()
 {
-	if ( _IsDetailShow )
+	ABGameMode_Main* gameMode = Cast<ABGameMode_Main>( GetGameMode() );
+	if( gameMode != nullptr )
 	{
-		ABGameMode_Main* gameMode = Cast<ABGameMode_Main>( GetGameMode() );
-		if( gameMode != nullptr )
+		if( _MatchInfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_RESULT )
 		{
 			gameMode->ChangeMode( E_MODE::E_MODE_RESULT_DETAIL );
 			UBWidget_ResultDetail* resultDetailWidget = B_HUD->GetWidgetInViewport<UBWidget_ResultDetail>( EBUIName::ResultDetail );
 			if( resultDetailWidget != nullptr )
 			{
 				resultDetailWidget->SetData( _MatchData );
+			}
+		}
+		else if( _MatchInfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE )
+		{
+			gameMode->ChangeMode( E_MODE::E_MODE_SCHEDULE_DETAIL );
+			UBWidget_ScheduleDetail* scheduleDetailWidget = B_HUD->GetWidgetInViewport<UBWidget_ScheduleDetail>( EBUIName::ScheduleDetail );
+			if( scheduleDetailWidget != nullptr )
+			{
+				scheduleDetailWidget->SetData( _MatchData );
 			}
 		}
 	}

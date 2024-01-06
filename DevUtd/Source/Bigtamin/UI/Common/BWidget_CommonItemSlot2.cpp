@@ -2,6 +2,9 @@
 
 
 #include "BWidget_CommonItemSlot2.h"
+#include "UI/Boots/BWidget_BootsDetail.h"
+#include "../../FBM_SaveGame.h"
+#include "Bigtamin.h"
 
 void UBWidget_CommonItemSlot2::Init()
 {

@@ -1,6 +1,8 @@
 #include "BWidget_MainSchedule.h"
 #include "BWidget_MatchItem.h"
 #include "UI/Equip/BWidget_EquipFilterItem.h"
+#include "UI/BWidget_Top.h"
+#include "../../FBM_SaveGame.h"
 #include "Bigtamin.h"
 
 #define SCROLL_ITEM_NUM 30
@@ -270,6 +272,7 @@ void UBWidget_MainSchedule::_UpdateScrollItem()
 		{
 			matchItemWidget->OwnerPannel = this;
 			matchItemWidget->SetMatchItem( _ArrayMatchData[matchIndex]);
+			matchItemWidget->SetMatchInfoType( E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE );
 			C_SB_Item->AddChild( matchItemWidget );
 			_CurScrollInex++;
 		}

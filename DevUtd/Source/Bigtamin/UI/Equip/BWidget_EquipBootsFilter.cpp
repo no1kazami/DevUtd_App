@@ -2,8 +2,9 @@
 
 #include "BWidget_EquipBootsFilter.h"
 #include "BWidget_EquipBootsFilterItem.h"
+#include "BWidget_EquipMain.h"
 #include "Bigtamin.h"
-
+#include "../../FBM_SaveGame.h"
 
 void UBWidget_EquipBootsFilter::Init( UBWidget* OwnerUI )
 {

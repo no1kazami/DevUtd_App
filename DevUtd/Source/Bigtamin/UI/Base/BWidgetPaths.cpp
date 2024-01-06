@@ -27,11 +27,13 @@ void UBWidgetPaths::_InitWidgetPath()
 	WidgetPathMap.Add( EBUIName::Faq, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Main/BP_FAQ_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::Ranking, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Ranking/BP_RankingMain_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::Schedule, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Match/BP_MainSchedule_UMG" ) ) );
+	WidgetPathMap.Add( EBUIName::ScheduleDetail, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Match/BP_MainSchedule_Detail_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::Result, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Match/BP_MainResult_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::ResultDetail, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Match/BP_MainResult_Detail_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::PlayerDetail, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Player/BP_Player_Detail_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::PlayerCompare, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Player/BP_Player_Compare_UMG" ) ) );
 	WidgetPathMap.Add( EBUIName::PlayerMain, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Player/BP_Player_Main_UMG" ) ) );
+	WidgetPathMap.Add( EBUIName::StadiumInfo, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Main/BP_StadiumInfo_UMG" ) ) );
 }
 
 void UBWidgetPaths::_InitDynamicWidgetPartsPath()
@@ -66,6 +68,7 @@ void UBWidgetPaths::_InitDynamicWidgetPartsPath()
 	DynamicWidgetPathMap.Add( EDynamicWidgetParts::ResultDetailSlot, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Match/BP_ResultDetailSlot_UMG" ) ) );
 	DynamicWidgetPathMap.Add( EDynamicWidgetParts::PlayerChart, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Player/BP_Player_Chart_UMG" ) ) );
 	DynamicWidgetPathMap.Add( EDynamicWidgetParts::PlayerSlot, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Player/BP_PlayerSlot_UMG" ) ) );
+	DynamicWidgetPathMap.Add( EDynamicWidgetParts::StadiumInfoSlot, UBWidgetPaths::GetWidgetDirectoryPath( TEXT( "Main/BP_StadiumInfo_Slot_UMG" ) ) );
 }
 
 void UBWidgetPaths::_InitModalWidgetPath()

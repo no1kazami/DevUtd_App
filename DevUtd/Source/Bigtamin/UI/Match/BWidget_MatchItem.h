@@ -41,7 +41,7 @@ private:
 
 	FString _HomeTeamName;
 	FString _AwayTeamName;
-	bool _IsDetailShow = false;
+	E_MATCH_INFO_TYPE _MatchInfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_MAX;
 	FST_MATCH_DATA _MatchData;
 
 public:
@@ -51,7 +51,7 @@ public:
 	void SetMainDataSchedule();
 	void SetMainDataResult();
 	void SetMatchItem(FST_MATCH_DATA matchData);
-	void SetShowDetail(const bool isShowDetail);
+	void SetMatchInfoType( E_MATCH_INFO_TYPE matchInfoType );
 
 private:
 	UFUNCTION()

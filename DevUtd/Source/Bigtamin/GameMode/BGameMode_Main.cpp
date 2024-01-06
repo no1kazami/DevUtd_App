@@ -15,10 +15,12 @@
 #include "UI/Upcoming/BWidget_Upcoming.h"
 #include "UI/Intro/BWidget_Intro.h"
 #include "UI/Main/BWidget_Faq.h"
+#include "UI/Main/BWidget_StadiumInfo.h"
 #include "UI/Ranking/BWidget_RankingMain.h"
 #include "UI/Match/BWidget_MainSchedule.h"
 #include "UI/Match/BWidget_MainResult.h"
 #include "UI/Match/BWidget_ResultDetail.h"
+#include "UI/Match/BWidget_ScheduleDetail.h"
 #include "UI/Player/BWidget_PlayerDetail.h"
 #include "UI/Player/BWidget_PlayerCompare.h"
 #include "UI/Player/BWidget_PlayerMain.h"
@@ -123,6 +125,9 @@ void ABGameMode_Main::ChangeMode( E_MODE eChangeMode )
 	case E_MODE::E_MODE_SCHEDULE_MAIN:
 		B_HUD->OpenUI<UBWidget_MainSchedule>( EBUIName::Schedule );
 		break;
+	case E_MODE::E_MODE_SCHEDULE_DETAIL:
+		B_HUD->OpenUI<UBWidget_ScheduleDetail>( EBUIName::ScheduleDetail );
+		break;
 	case E_MODE::E_MODE_RESULT_MAIN:
 		B_HUD->OpenUI<UBWidget_MainResult>( EBUIName::Result );
 		break;
@@ -137,6 +142,9 @@ void ABGameMode_Main::ChangeMode( E_MODE eChangeMode )
 		break;
 	case E_MODE::E_MODE_PLAYER_MAIN:
 		B_HUD->OpenUI<UBWidget_PlayerMain>( EBUIName::PlayerMain );
+		break;
+	case E_MODE::E_MODE_STADIUM_INFO:
+		B_HUD->OpenUI<UBWidget_StadiumInfo>( EBUIName::StadiumInfo );
 		break;
 	default:
 		break;

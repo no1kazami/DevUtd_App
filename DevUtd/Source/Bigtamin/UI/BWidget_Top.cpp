@@ -121,6 +121,12 @@ void UBWidget_Top::ChangeTopMode( E_MODE changeMode )
 		C_WS_TopBtn->SetActiveWidgetIndex( 1 );
 		C_Txt_TopTitle1->SetText( GET_BTEXT( 2 ) );
 		break;
+	case E_MODE::E_MODE_SCHEDULE_DETAIL:
+		C_WidgetSwitcher_Top->SetActiveWidgetIndex( 0 );
+		C_WS_TopBtn->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
+		C_WS_TopBtn->SetActiveWidgetIndex( 1 );
+		C_Txt_TopTitle1->SetText( GET_BTEXT( 60 ) );
+		break;
 	case E_MODE::E_MODE_RESULT_MAIN:
 		C_WidgetSwitcher_Top->SetActiveWidgetIndex( 0 );
 		C_WS_TopBtn->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
@@ -150,6 +156,12 @@ void UBWidget_Top::ChangeTopMode( E_MODE changeMode )
 		C_WS_TopBtn->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
 		C_WS_TopBtn->SetActiveWidgetIndex( 1 );
 		C_Txt_TopTitle1->SetText( GET_BTEXT( 43 ) );
+		break;
+	case E_MODE::E_MODE_STADIUM_INFO:
+		C_WidgetSwitcher_Top->SetActiveWidgetIndex( 0 );
+		C_WS_TopBtn->SetVisibility( ESlateVisibility::SelfHitTestInvisible );
+		C_WS_TopBtn->SetActiveWidgetIndex( 1 );
+		C_Txt_TopTitle1->SetText( GET_BTEXT( 61 ) );
 		break;
 	default:
 		break;

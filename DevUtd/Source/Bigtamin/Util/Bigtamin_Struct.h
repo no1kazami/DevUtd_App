@@ -632,7 +632,11 @@ struct FST_STADIUM_INFO_DATA
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY() FString StadiumName;  // 구장 이름
+	UPROPERTY() FString StadiumName;       // 구장 이름
+	UPROPERTY() FString NaviURL_TMap;      // T-Map URL
+	UPROPERTY() FString NaviURL_Kakao;     // 카카오 내비 URL
+	UPROPERTY() FString NaviURL_Naver;     // 네이버 지도 URL
+	UPROPERTY() FString Address;           // 주소 정보
 };
 
 // 경기 데이터

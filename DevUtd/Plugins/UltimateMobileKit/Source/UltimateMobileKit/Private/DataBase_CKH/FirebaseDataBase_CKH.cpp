@@ -635,6 +635,22 @@ bool FirebaseDataBase_CKH::GetDataBaseStadiumData( const char* dbPath, TArray<FS
 						{
 							stadiumInfoData.StadiumName = FString( UTF8_TO_TCHAR( snap.Child( "StadiumName" ).value().string_value() ) );
 						}
+						if( snap.HasChild( "TMap" ) )
+						{
+							stadiumInfoData.NaviURL_TMap = FString( UTF8_TO_TCHAR( snap.Child( "TMap" ).value().string_value() ) );
+						}
+						if( snap.HasChild( "Kakao" ) )
+						{
+							stadiumInfoData.NaviURL_Kakao = FString( UTF8_TO_TCHAR( snap.Child( "Kakao" ).value().string_value() ) );
+						}
+						if( snap.HasChild( "Naver" ) )
+						{
+							stadiumInfoData.NaviURL_Naver = FString( UTF8_TO_TCHAR( snap.Child( "Naver" ).value().string_value() ) );
+						}
+						if( snap.HasChild( "Address" ) )
+						{
+							stadiumInfoData.Address = FString( UTF8_TO_TCHAR( snap.Child( "Address" ).value().string_value() ) );
+						}
 						OutStadiumData.Add( stadiumInfoData );
 					}
 					////////////////////////////////////////////////////////////////////////////////////////

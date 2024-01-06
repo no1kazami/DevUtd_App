@@ -4,6 +4,7 @@
 #include "BWidget_MainCategory.h"
 #include "UI/BWidget_NewMain.h"
 #include "../../Plugins/MobileUtils/Source/MobileUtils/Public/IMobileUtils.h"
+#include "../../FBM_SaveGame.h"
 
 void UBWidget_MainCategory::Init( UBWidget* OwnerUI )
 {
@@ -14,6 +15,7 @@ void UBWidget_MainCategory::Init( UBWidget* OwnerUI )
 	ButtonDelegate_Clicked( this, C_Btn_Result, &UBWidget_MainCategory::_OnClick_Result );
 	ButtonDelegate_Clicked( this, C_Btn_Ranking, &UBWidget_MainCategory::_OnClick_Ranking );
 	ButtonDelegate_Clicked( this, C_Btn_Player, &UBWidget_MainCategory::_OnClick_Player );
+	ButtonDelegate_Clicked( this, C_Btn_Stadium, &UBWidget_MainCategory::_OnClick_Stadium );
 	ButtonDelegate_Clicked( this, C_Btn_Noti, &UBWidget_MainCategory::_OnClick_Noti );
 	ButtonDelegate_Clicked( this, C_Btn_Idea, &UBWidget_MainCategory::_OnClick_Idea );
 	ButtonDelegate_Clicked( this, C_Btn_Rule, &UBWidget_MainCategory::_OnClick_Rule );
@@ -70,6 +72,11 @@ void UBWidget_MainCategory::_OnClick_Ranking()
 void UBWidget_MainCategory::_OnClick_Player()
 {
 	OnClickMainCategory.Broadcast( E_MAINCATEGORY_TYPE::PLAYER );
+}
+
+void UBWidget_MainCategory::_OnClick_Stadium()
+{
+	OnClickMainCategory.Broadcast( E_MAINCATEGORY_TYPE::STADIUM );
 }
 
 void UBWidget_MainCategory::_OnClick_Noti()

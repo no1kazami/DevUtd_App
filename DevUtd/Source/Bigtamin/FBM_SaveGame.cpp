@@ -1410,6 +1410,18 @@ const TArray<FST_STADIUM_INFO_DATA>& UFBM_SaveGame::GetStadiumData_DB()
 	return _StadiumData;
 }
 
+const FST_STADIUM_INFO_DATA* UFBM_SaveGame::GetStadiumData_DB_ByName( FString stadiumType )
+{
+	for( int32 stadiumIndex = 0; stadiumIndex < _StadiumData.Num(); ++stadiumIndex )
+	{
+		if( _StadiumData[stadiumIndex].StadiumName.Equals( stadiumType, ESearchCase::IgnoreCase ) )
+		{
+			return &_StadiumData[stadiumIndex];
+		}
+	}
+	return nullptr;
+}
+
 const TArray<FST_TEAM_INFO_DATA>& UFBM_SaveGame::GetTeamData_DB()
 {
 	return _TeamData;
@@ -1564,6 +1576,10 @@ void UFBM_SaveGame::_SetStadiumData_Windows()
 		_StadiumData.Empty();
 		FST_STADIUM_INFO_DATA tempData;
 		tempData.StadiumName = FString( TEXT( "광주 문형 구장" ) );
+		tempData.Address = FString( TEXT( "경기 광주시 보뚱치길130번길 16-22" ) );
+		tempData.NaviURL_TMap = FString( TEXT( "https://surl.tmobiapi.com/be4599ca" ) );
+		tempData.NaviURL_Kakao = FString( TEXT( "https://kko.to/QtwZu-hnCl" ) );
+		tempData.NaviURL_Naver = FString( TEXT( "https://naver.me/55yje7E1" ) );
 		_StadiumData.Add( tempData );
 
 		FST_STADIUM_INFO_DATA tempData2;
@@ -1601,7 +1617,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData.HomeTeamName = TEXT( "DevUtd 주황" );
 		tempData.AwayTeamName = TEXT( "NC" );
 		tempData.Comment = TEXT( "광주 문형 구장" );
-		tempData.MatchDate = TEXT( "20220101" );
+		tempData.MatchDate = TEXT( "20240101" );
 		tempData.MatchTime = TEXT( "09:00 ~ 11:00" );
 		tempData.HomeGoal = 6;
 		tempData.AwayGoal = 4;
@@ -1644,7 +1660,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData2.HomeTeamName = TEXT( "DevUtd 주황" );
 		tempData2.AwayTeamName = TEXT( "카카오" );
 		tempData2.Comment = TEXT( "탄천 A 구장" );
-		tempData2.MatchDate = TEXT( "20211215" );
+		tempData2.MatchDate = TEXT( "20240102" );
 		tempData2.MatchTime = TEXT( "20:00 ~ 22:00" );
 		tempData2.HomeGoal = 1;
 		tempData2.AwayGoal = 0;
@@ -1675,7 +1691,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData3.HomeTeamName = TEXT( "DevUtd" );
 		tempData3.AwayTeamName = TEXT( "카카오" );
 		tempData3.Comment = TEXT( "탄천 A 구장" );
-		tempData3.MatchDate = TEXT( "20211230" );
+		tempData3.MatchDate = TEXT( "20240130" );
 		tempData3.MatchTime = TEXT( "20:00 ~ 22:00" );
 		_MatchData.Add( tempData3 );
 
@@ -1684,8 +1700,8 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData4.InfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE;
 		tempData4.HomeTeamName = TEXT( "DevUtd" );
 		tempData4.AwayTeamName = TEXT( "NC" );
-		tempData4.Comment = TEXT( "탄천 B 구장" );
-		tempData4.MatchDate = TEXT( "20220102" );
+		tempData4.Comment = TEXT( "광주 문형 구장" );
+		tempData4.MatchDate = TEXT( "20240202" );
 		tempData4.MatchTime = TEXT( "09:00 ~ 11:00" );
 		_MatchData.Add( tempData4 );
 
@@ -1745,7 +1761,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData10.HomeTeamName = TEXT( "DevUtd 주황" );
 		tempData10.AwayTeamName = TEXT( "DevUtd 형광" );
 		tempData10.Comment = TEXT( "광주 문형 구장" );
-		tempData10.MatchDate = TEXT( "20220111" );
+		tempData10.MatchDate = TEXT( "20240111" );
 		tempData10.MatchTime = TEXT( "20:00 ~ 22:00" );
 		_MatchData.Add( tempData10 );
 

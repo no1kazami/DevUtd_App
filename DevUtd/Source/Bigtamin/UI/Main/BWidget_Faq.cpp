@@ -5,6 +5,7 @@
 #include "UI/BWidget_Top.h"
 #include "BWidget_FaqSlot.h"
 #include "Bigtamin.h"
+#include "../../FBM_SaveGame.h"
 
 void UBWidget_Faq::Init()
 {

@@ -27,6 +27,8 @@ private:
 	UPROPERTY( meta = (BindWidget) )
 		UBButton* C_Btn_Player;
 	UPROPERTY( meta = (BindWidget) )
+		UBButton* C_Btn_Stadium;
+	UPROPERTY( meta = (BindWidget) )
 		UBButton* C_Btn_Noti;
 	UPROPERTY( meta = (BindWidget) )
 		UBButton* C_Btn_Faq;
@@ -62,6 +64,8 @@ private:
 		void _OnClick_Ranking();
 	UFUNCTION()
 		void _OnClick_Player();
+	UFUNCTION()
+		void _OnClick_Stadium();
 	UFUNCTION()
 		void _OnClick_Noti();
 	UFUNCTION()

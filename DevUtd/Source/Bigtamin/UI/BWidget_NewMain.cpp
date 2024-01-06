@@ -7,8 +7,11 @@
 #include "GameMode/BGameMode_main.h"
 #include "Blueprint/AsyncTaskDownloadImage.h"
 #include "Kismet/KismetStringLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "UI/Match/BWidget_MainMatchSlot.h"
 #include "UI/Ranking/BWidget_MainRankingSlot.h"
+#include "PlayerController/Bigtamin_PlayerController.h"
+#include "BWidget_Top.h"
 
 #define MAIN_AD_BANNER_IMAGE_SIZE FVector2D( 1024.f, 512.f )
 #define NEW_ITEM_MAX_NUM 5
@@ -197,6 +200,9 @@ void UBWidget_NewMain::OnAnimationFinished_Implementation( const UWidgetAnimatio
 				case E_MAINCATEGORY_TYPE::PLAYER:
 					gameMode->ChangeMode( E_MODE::E_MODE_PLAYER_MAIN );
 					break;
+				case E_MAINCATEGORY_TYPE::STADIUM:
+					gameMode->ChangeMode( E_MODE::E_MODE_STADIUM_INFO );
+					break;
 				default:
 					break;
 				}
@@ -266,6 +272,7 @@ void UBWidget_NewMain::_OnClickCategoryEvent( const E_MAINCATEGORY_TYPE mainCate
 	case E_MAINCATEGORY_TYPE::RESULT:
 	case E_MAINCATEGORY_TYPE::RANKING:
 	case E_MAINCATEGORY_TYPE::PLAYER:
+	case E_MAINCATEGORY_TYPE::STADIUM:
 		PlayCategoryAni( false );
 		break;
 	default:
@@ -528,7 +535,7 @@ bool UBWidget_NewMain::_CheckVersion()
 #if PLATFORM_ANDROID
 	FString curServerVer = UFBM_SaveGame::Get().GetCurVersion();
 #else
-	FString curServerVer = TEXT( "1.0.3" );
+	FString curServerVer = TEXT( "1.0.4" );
 #endif
 
 	FString curClientVersion;

@@ -3,6 +3,7 @@
 #include "UI/Boots/BWidget_BootsOptionSlot.h"
 #include "UI/Equip/BWidget_EquipFilterItem.h"
 #include "UI/Common/BWidget_CommonItemSlot2.h"
+#include "UI/MyInfo/BWidget_BookMark.h"
 #include "UI/Shop/BWidget_ShopSlot.h"
 #include "UI/Shop/BWidget_ShopChart.h"
 #include "../../FBM_SaveGame.h"
