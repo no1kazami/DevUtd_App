@@ -535,7 +535,7 @@ bool UBWidget_NewMain::_CheckVersion()
 #if PLATFORM_ANDROID
 	FString curServerVer = UFBM_SaveGame::Get().GetCurVersion();
 #else
-	FString curServerVer = TEXT( "1.0.4" );
+	FString curServerVer = TEXT( "1.0.5" );
 #endif
 
 	FString curClientVersion;
