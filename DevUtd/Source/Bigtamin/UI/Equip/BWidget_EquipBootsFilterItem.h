@@ -26,6 +26,8 @@ public:
 	FOnClickFilterStadium OnClickFilterStadium;
 	DECLARE_EVENT_TwoParams( UBWidget_EquipBootsFilterItem, FOnClickFilterTeam, const FString, const bool )
 	FOnClickFilterTeam OnClickFilterTeam;
+	DECLARE_EVENT_TwoParams( UBWidget_EquipBootsFilterItem, FOnClickFilterMonth, const int32, const bool )
+	FOnClickFilterMonth OnClickFilterMonth;
 
 
 private:
@@ -48,6 +50,7 @@ private:
 	E_SILO_TYPE _SiloType = E_SILO_TYPE::E_SILO_TYPE_NONE;
 	FString _StadiumType;
 	FString _TeamType;
+	int32 _MonthType;
 	
 public:
 	virtual void Init() override;
@@ -61,6 +64,7 @@ public:
 
 	void SetRankingFilterData_Stadium( FString stadiumType, bool isChecked, int32 itemCount );
 	void SetRankingFilterData_Team( FString teamType, bool isChecked, int32 itemCount );
+	void SetRankingFilterData_Month( int32 monthType, bool isChecked, int32 itemCount );
 
 	void ResetFilterItem();
 	ECheckBoxState GetFilterCheckState() const;

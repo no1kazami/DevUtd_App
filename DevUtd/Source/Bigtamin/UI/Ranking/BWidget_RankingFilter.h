@@ -70,6 +70,20 @@ private:
 	UPROPERTY( meta = (BindWidget) )
 		UImage* C_Img_LineAwayTeam;
 
+	// ±â°£
+	UPROPERTY( meta = (BindWidget) )
+		UOverlay* C_Ol_Month;
+	UPROPERTY( meta = (BindWidget) )
+		UBButton* C_Btn_Month;
+	UPROPERTY( meta = (BindWidget) )
+		UCheckBox* C_CB_Month;
+	UPROPERTY( meta = (BindWidget) )
+		UVerticalBox* C_VB_Filter_Month;
+	UPROPERTY( meta = (BindWidget) )
+		UTextBlock* C_Txt_Count_Month;
+	UPROPERTY( meta = (BindWidget) )
+		UImage* C_Img_LineMonth;
+
 	FST_RANKING_FILTER_INFO _PrevFilterInfo;
 	FST_RANKING_FILTER_INFO _FilterInfo;
 
@@ -103,22 +117,29 @@ private:
 		void _OnClick_Stadium();
 	UFUNCTION()
 		void _OnClick_AwayTeam();
+	UFUNCTION()
+		void _OnClick_Month();
 
 	UFUNCTION()
 		void _OnGroundCheckStateChanged( bool isChecked );
 	UFUNCTION()
 		void _OnAwayTeamCheckStateChanged( bool isChecked );
+	UFUNCTION()
+		void _OnMonthCheckStateChanged( bool isChecked );
 
 	UFUNCTION()
 		void _HandleStadiumFilter( const FString stadiumType, const bool isCheck );
 	UFUNCTION()
 		void _HandleAwayTeamFilter( const FString AwayTeamType, const bool isCheck );
+	UFUNCTION()
+		void _HandleMonthFilter( const int32 MonthType, const bool isCheck );
 
 	void _InitRankingFilter();
 	void _UpdateEquipBootsFilter( E_BOOTS_FILTER_TYPE filterType );
-	void _GetFilteringCategoryData( TArray<FString>& Out_StadiumInfo, TArray<FString>& Out_TeamInfo );
+	void _GetFilteringCategoryData( TArray<FString>& Out_StadiumInfo, TArray<FString>& Out_TeamInfo, TArray<int32>& Out_MonthInfo );
 	void _GetFilterType( E_SORT_TYPE& Out_SortType );
 
 	void _ResetFilter_Stadium( const TArray<FString>& stadiumInfo );
 	void _ResetFilter_AwayTeam( const TArray<FString>& teamInfo );
+	void _ResetFilter_Month( const TArray<int32>& monthInfo );
 };

@@ -325,11 +325,13 @@ struct FST_RANKING_FILTER_INFO
 
 	TArray<FString> StadiumTypes;
 	TArray<FString> AwayTeamTypes;
+	TArray<int32> MonthTypes;
 
 	void InitFilterInfo()
 	{
 		StadiumTypes.Empty();
 		AwayTeamTypes.Empty();
+		MonthTypes.Empty();
 	}
 
 	void CheckStadiumType( FString stadiumType, bool isCheck )
@@ -358,9 +360,22 @@ struct FST_RANKING_FILTER_INFO
 		}
 	}
 
+	void CheckMonthType( int32 monthType, bool isCheck )
+	{
+		int32 findIndex = MonthTypes.Find( monthType );
+		if( findIndex == INDEX_NONE && isCheck )
+		{
+			MonthTypes.AddUnique( monthType );
+		}
+		else if( findIndex != INDEX_NONE && isCheck == false )
+		{
+			MonthTypes.Remove( monthType );
+		}
+	}
+
 	bool IsNotFilter()
 	{
-		return StadiumTypes.Num() == 0 && AwayTeamTypes.Num() == 0;
+		return StadiumTypes.Num() == 0 && AwayTeamTypes.Num() == 0 && MonthTypes.Num() == 0;
 	}
 
 	bool IsCheckStadium( FString stadiumType ) const
@@ -381,6 +396,16 @@ struct FST_RANKING_FILTER_INFO
 		}
 
 		return AwayTeamTypes.Find( awayTeamType ) != INDEX_NONE;
+	}
+
+	bool IsCheckMonth( int32 monthType ) const
+	{
+		if( MonthTypes.Num() == 0 )
+		{
+			return true;
+		}
+
+		return MonthTypes.Find( monthType ) != INDEX_NONE;
 	}
 };
 
@@ -671,19 +696,22 @@ struct FST_PLAYER_MATCH_DATA
 	UPROPERTY()	E_MATCH_TYPE MatchType;          // 매치 타입( A 매치, 자체전)
 	UPROPERTY() FString Stadium;  // 경기장 장보
 	UPROPERTY() FString AwayTeam; // 상대팀 정보
+	UPROPERTY() int32 MatchMonth; // 매치월 정보
 
 	FST_PLAYER_MATCH_DATA()
 	{
 		MatchType = E_MATCH_TYPE::E_MATCH_TYPE_OWN_MATCH;
 		Stadium.Empty();
 		AwayTeam.Empty();
+		MatchMonth = 0;
 	}
 
-	FST_PLAYER_MATCH_DATA( FString InStadium, FString InAwayTeam, E_MATCH_TYPE InMatchType )
+	FST_PLAYER_MATCH_DATA( FString InStadium, FString InAwayTeam, E_MATCH_TYPE InMatchType, int32 InMatchMonth )
 	{
 		Stadium = InStadium;
 		AwayTeam = InAwayTeam;
 		MatchType = InMatchType;
+		MatchMonth = InMatchMonth;
 	}
 
 	bool IsExceptionStadium() const
@@ -816,7 +844,8 @@ struct FST_PLAYER_DATA
 				}
 
 				if( curRankingFilterInfo.IsCheckStadium( goalData.Stadium ) &&
-					curRankingFilterInfo.IsCheckAwayTeam( goalData.AwayTeam ) )
+					curRankingFilterInfo.IsCheckAwayTeam( goalData.AwayTeam ) &&
+					curRankingFilterInfo.IsCheckMonth( goalData.MatchMonth ) )
 				{
 					returnVal++;
 				}
@@ -872,7 +901,8 @@ struct FST_PLAYER_DATA
 				}
 
 				if( curRankingFilterInfo.IsCheckStadium( assistData.Stadium ) &&
-					curRankingFilterInfo.IsCheckAwayTeam( assistData.AwayTeam ) )
+					curRankingFilterInfo.IsCheckAwayTeam( assistData.AwayTeam ) &&
+					curRankingFilterInfo.IsCheckMonth( assistData.MatchMonth ) )
 				{
 					returnVal++;
 				}
@@ -938,7 +968,8 @@ struct FST_PLAYER_DATA
 				}
 
 				if( curRankingFilterInfo.IsCheckStadium( gamesNumData.Stadium ) &&
-					curRankingFilterInfo.IsCheckAwayTeam( gamesNumData.AwayTeam ) )
+					curRankingFilterInfo.IsCheckAwayTeam( gamesNumData.AwayTeam ) &&
+					curRankingFilterInfo.IsCheckMonth( gamesNumData.MatchMonth ) )
 				{
 					returnVal++;
 				}

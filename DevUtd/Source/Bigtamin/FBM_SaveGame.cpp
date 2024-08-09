@@ -808,6 +808,8 @@ void UFBM_SaveGame::UpdateRecordData()
 		for( auto& matchItem : _MatchData )
 		{
 			FString strYear = matchItem.MatchDate.Left( 4 );
+			FString strMon = matchItem.MatchDate.Mid( 4, 2 );
+			int32 tempMonth = FCString::Atoi( *strMon );
 
 			// 골 정보 업데이트
 			for( auto& homeGoalItem : matchItem.HomeGoalInfo )
@@ -818,14 +820,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.GoalNum[strYear] = playerItem.GoalNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewGoalData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.GoalNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add(tmpData);
 						playerItem.NewGoalData.Add(strYear, tmpDatas );
@@ -863,14 +865,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.GoalNum[strYear] = playerItem.GoalNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewGoalData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.GoalNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add( tmpData );
 						playerItem.NewGoalData.Add( strYear, tmpDatas );
@@ -909,14 +911,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.AssistNum[strYear] = playerItem.AssistNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewAssistData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.AssistNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add( tmpData );
 						playerItem.NewAssistData.Add( strYear, tmpDatas );
@@ -953,14 +955,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.AssistNum[strYear] = playerItem.AssistNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewAssistData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.AssistNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add( tmpData );
 						playerItem.NewAssistData.Add( strYear, tmpDatas );
@@ -999,14 +1001,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.GamesNum[strYear] = playerItem.GamesNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewGamesNumData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.GamesNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add( tmpData );
 						playerItem.NewGamesNumData.Add( strYear, tmpDatas );
@@ -1043,14 +1045,14 @@ void UFBM_SaveGame::UpdateRecordData()
 					{
 						playerItem.GamesNum[strYear] = playerItem.GamesNum[strYear] + 1;
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						playerItem.NewGamesNumData[strYear].PlayerMatchDatas.Add( tmpData );
 					}
 					else
 					{
 						playerItem.GamesNum.Add( strYear, 1 );
 
-						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType );
+						FST_PLAYER_MATCH_DATA tmpData( matchItem.Comment, matchItem.AwayTeamName, matchItem.MatchType, tempMonth );
 						FST_PLAYER_MATCH_DATAS tmpDatas;
 						tmpDatas.PlayerMatchDatas.Add( tmpData );
 						playerItem.NewGamesNumData.Add( strYear, tmpDatas );
@@ -1797,11 +1799,11 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 
 		FST_MATCH_DATA tempData14;
 		tempData14.MatchType = E_MATCH_TYPE::E_MATCH_TYPE_A_MATCH;
-		tempData14.InfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE;
+		tempData14.InfoType = E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_RESULT;
 		tempData14.HomeTeamName = TEXT( "DevUtd" );
-		tempData14.AwayTeamName = TEXT( "아프리카 TV" );
-		tempData14.Comment = TEXT( "황송 공원 축구장" );
-		tempData14.MatchDate = TEXT( "20221231" );
+		tempData14.AwayTeamName = TEXT( "NC" );
+		tempData14.Comment = TEXT( "광주 문형 구장" );
+		tempData14.MatchDate = TEXT( "20240531" );
 		tempData14.MatchTime = TEXT( "20:00 ~ 22:00" );
 		tempData14.HomeGoal = 1;
 		tempData14.AwayGoal = 0;
@@ -1833,7 +1835,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData15.HomeTeamName = TEXT( "DevUtd" );
 		tempData15.AwayTeamName = TEXT( "NC" );
 		tempData15.Comment = TEXT( "탄천 A 구장" );
-		tempData15.MatchDate = TEXT( "20220205" );
+		tempData15.MatchDate = TEXT( "20240205" );
 		tempData15.MatchTime = TEXT( "20:00 ~ 22:00" );
 		tempData15.HomeGoal = 1;
 		tempData15.AwayGoal = 0;
@@ -1866,7 +1868,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData16.HomeTeamName = TEXT( "DevUtd 주황" );
 		tempData16.AwayTeamName = TEXT( "DevUtd 형광" );
 		tempData16.Comment = TEXT( "탄천 A 구장" );
-		tempData16.MatchDate = TEXT( "20220203" );
+		tempData16.MatchDate = TEXT( "20240203" );
 		tempData16.MatchTime = TEXT( "20:00 ~ 22:00" );
 		tempData16.HomeGoal = 1;
 		tempData16.AwayGoal = 0;
@@ -1882,6 +1884,7 @@ void UFBM_SaveGame::_SetMatchData_Windows()
 		tempData16.HomePlayerInfo.Add( TEXT( "이교순" ) );
 		tempData16.HomePlayerInfo.Add( TEXT( "하동석" ) );
 		tempData16.HomePlayerInfo.Add( TEXT( "이상훈" ) );
+		tempData16.HomePlayerInfo.Add( TEXT( "정의집" ) );
 		tempData16.AwayPlayerInfo.Add( TEXT( "고정민" ) );
 		tempData16.AwayPlayerInfo.Add( TEXT( "방정현" ) );
 		tempData16.AwayPlayerInfo.Add( TEXT( "박정현" ) );

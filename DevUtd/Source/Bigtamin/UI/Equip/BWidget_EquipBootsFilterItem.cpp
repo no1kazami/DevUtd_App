@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BWidget_EquipBootsFilterItem.h"
+#include "Bigtamin.h"
 
 
 void UBWidget_EquipBootsFilterItem::Init()
@@ -50,6 +51,9 @@ void UBWidget_EquipBootsFilterItem::_OnBootsFilterCheckStateChanged( bool isChec
 		break;
 	case E_BOOTS_FILTER_TYPE::AWAY_TEAM:
 		OnClickFilterTeam.Broadcast( _TeamType, isChecked );
+		break;
+	case E_BOOTS_FILTER_TYPE::MONTH:
+		OnClickFilterMonth.Broadcast( _MonthType, isChecked );
 		break;
 	default:
 		break;
@@ -137,6 +141,17 @@ void UBWidget_EquipBootsFilterItem::SetRankingFilterData_Team( FString teamType,
 	_FilterType = E_BOOTS_FILTER_TYPE::AWAY_TEAM;
 	_TeamType = teamType;
 	C_Txt_BootsFilterItem->SetText( FText::FromString( _TeamType ) );
+	C_Txt_Count->SetText( FText::Format( GET_BTEXT( 57 ), FText::AsNumber( itemCount ) ) );
+
+	C_CB_BootsFilterItem->SetCheckedState( isChecked ? ECheckBoxState::Checked : ECheckBoxState::Unchecked );
+	_UpdateCheckBox();
+}
+
+void UBWidget_EquipBootsFilterItem::SetRankingFilterData_Month( int32 monthType, bool isChecked, int32 itemCount )
+{
+	_FilterType = E_BOOTS_FILTER_TYPE::MONTH;
+	_MonthType = monthType;
+	C_Txt_BootsFilterItem->SetText( FText::Format( GET_BTEXT( 62 ), FText::AsNumber( _MonthType ) ) );
 	C_Txt_Count->SetText( FText::Format( GET_BTEXT( 57 ), FText::AsNumber( itemCount ) ) );
 
 	C_CB_BootsFilterItem->SetCheckedState( isChecked ? ECheckBoxState::Checked : ECheckBoxState::Unchecked );

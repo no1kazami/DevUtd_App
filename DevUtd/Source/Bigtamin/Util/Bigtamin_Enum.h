@@ -110,6 +110,7 @@ enum class E_BOOTS_FILTER_TYPE : uint8
 	SILO,
 	STADIUM,
 	AWAY_TEAM,
+	MONTH,
 	MAX
 };
 

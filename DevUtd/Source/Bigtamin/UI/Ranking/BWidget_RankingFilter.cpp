@@ -15,11 +15,14 @@ void UBWidget_RankingFilter::Init( UBWidget* OwnerUI )
 
 	ButtonDelegate_Clicked( this, C_Btn_Ground, &UBWidget_RankingFilter::_OnClick_Stadium );
 	ButtonDelegate_Clicked( this, C_Btn_AwayTeam, &UBWidget_RankingFilter::_OnClick_AwayTeam );
+	ButtonDelegate_Clicked( this, C_Btn_Month, &UBWidget_RankingFilter::_OnClick_Month );
 
 	C_CB_Ground->OnCheckStateChanged.RemoveDynamic( this, &UBWidget_RankingFilter::_OnGroundCheckStateChanged );
 	C_CB_Ground->OnCheckStateChanged.AddDynamic( this, &UBWidget_RankingFilter::_OnGroundCheckStateChanged );
 	C_CB_AwayTeam->OnCheckStateChanged.RemoveDynamic( this, &UBWidget_RankingFilter::_OnAwayTeamCheckStateChanged );
 	C_CB_AwayTeam->OnCheckStateChanged.AddDynamic( this, &UBWidget_RankingFilter::_OnAwayTeamCheckStateChanged );
+	C_CB_Month->OnCheckStateChanged.RemoveDynamic( this, &UBWidget_RankingFilter::_OnMonthCheckStateChanged );
+	C_CB_Month->OnCheckStateChanged.AddDynamic( this, &UBWidget_RankingFilter::_OnMonthCheckStateChanged );
 
 	_InitRankingFilter();
 }
@@ -51,6 +54,19 @@ void UBWidget_RankingFilter::ResetFilter()
 
 	C_CB_AwayTeam->SetCheckedState( ECheckBoxState::Unchecked );
 	_OnAwayTeamCheckStateChanged( false );
+
+	// 기간 Reset
+	for( int i = 0; i < C_VB_Filter_Month->GetChildrenCount(); i++ )
+	{
+		UBWidget_EquipBootsFilterItem* It = Cast<UBWidget_EquipBootsFilterItem>( C_VB_Filter_Month->GetChildAt( i ) );
+		if( It != nullptr )
+		{
+			It->ResetFilterItem();
+		}
+	}
+
+	C_CB_Month->SetCheckedState( ECheckBoxState::Unchecked );
+	_OnMonthCheckStateChanged( false );
 
 	// 필터 Reset
 	_FilterInfo.InitFilterInfo();
@@ -101,6 +117,8 @@ void UBWidget_RankingFilter::OnShow()
 	_OnGroundCheckStateChanged( false );
 	C_CB_AwayTeam->SetCheckedState( ECheckBoxState::Unchecked );
 	_OnAwayTeamCheckStateChanged( false );
+	C_CB_Month->SetCheckedState( ECheckBoxState::Unchecked );
+	_OnMonthCheckStateChanged( false );
 }
 
 void UBWidget_RankingFilter::_OnClick_FilterCancel()
@@ -140,6 +158,11 @@ void UBWidget_RankingFilter::_ResetClick( E_BOOTS_FILTER_TYPE clickFilterType )
 		C_CB_AwayTeam->SetCheckedState( ECheckBoxState::Unchecked );
 		_OnAwayTeamCheckStateChanged( false );
 	}
+	if( clickFilterType != E_BOOTS_FILTER_TYPE::MONTH )
+	{
+		C_CB_Month->SetCheckedState( ECheckBoxState::Unchecked );
+		_OnMonthCheckStateChanged( false );
+	}
 }
 
 void UBWidget_RankingFilter::_OnClick_Stadium()
@@ -158,6 +181,14 @@ void UBWidget_RankingFilter::_OnClick_AwayTeam()
 	_OnAwayTeamCheckStateChanged( C_CB_AwayTeam->GetCheckedState() == ECheckBoxState::Checked );
 }
 
+void UBWidget_RankingFilter::_OnClick_Month()
+{
+	_ResetClick( E_BOOTS_FILTER_TYPE::MONTH );
+
+	C_CB_Month->SetCheckedState( C_CB_Month->GetCheckedState() == ECheckBoxState::Checked ? ECheckBoxState::Unchecked : ECheckBoxState::Checked );
+	_OnMonthCheckStateChanged( C_CB_Month->GetCheckedState() == ECheckBoxState::Checked );
+}
+
 void UBWidget_RankingFilter::_OnGroundCheckStateChanged( bool isChecked )
 {
 	C_VB_Filter_Ground->SetVisibility( isChecked ? ESlateVisibility::Visible : ESlateVisibility::Collapsed );
@@ -168,6 +199,12 @@ void UBWidget_RankingFilter::_OnAwayTeamCheckStateChanged( bool isChecked )
 {
 	C_VB_Filter_AwayTeam->SetVisibility( isChecked ? ESlateVisibility::Visible : ESlateVisibility::Collapsed );
 	C_Img_LineAwayTeam->SetVisibility( isChecked ? ESlateVisibility::Collapsed : ESlateVisibility::Visible );
+}
+
+void UBWidget_RankingFilter::_OnMonthCheckStateChanged( bool isChecked )
+{
+	C_VB_Filter_Month->SetVisibility( isChecked ? ESlateVisibility::Visible : ESlateVisibility::Collapsed );
+	C_Img_LineMonth->SetVisibility( isChecked ? ESlateVisibility::Collapsed : ESlateVisibility::Visible );
 }
 
 void UBWidget_RankingFilter::_HandleStadiumFilter( const FString stadiumType, const bool isCheck )
@@ -182,33 +219,47 @@ void UBWidget_RankingFilter::_HandleAwayTeamFilter( const FString AwayTeamType, 
 	_UpdateEquipBootsFilter( E_BOOTS_FILTER_TYPE::AWAY_TEAM );
 }
 
+void UBWidget_RankingFilter::_HandleMonthFilter( const int32 MonthType, const bool isCheck )
+{
+	_FilterInfo.CheckMonthType( MonthType, isCheck );
+	_UpdateEquipBootsFilter( E_BOOTS_FILTER_TYPE::MONTH );
+}
+
 void UBWidget_RankingFilter::_InitRankingFilter()
 {
 	TArray<FString> stadiumInfo;
 	TArray<FString> teamInfo;
-	_GetFilteringCategoryData( stadiumInfo, teamInfo );
+	TArray<int32> monthInfo;
+	_GetFilteringCategoryData( stadiumInfo, teamInfo, monthInfo );
 
 	// 구장 초기화
 	_ResetFilter_Stadium( stadiumInfo );
 
 	// 상대팀 초기화
 	_ResetFilter_AwayTeam( teamInfo );
+
+	// 기간 초기화
+	_ResetFilter_Month( monthInfo );
 }
 
 void UBWidget_RankingFilter::_UpdateEquipBootsFilter( E_BOOTS_FILTER_TYPE filterType )
 {
 	TArray<FString> stadiumInfo;
 	TArray<FString> teamInfo;
-	_GetFilteringCategoryData( stadiumInfo, teamInfo );
+	TArray<int32> monthInfo;
+	_GetFilteringCategoryData( stadiumInfo, teamInfo, monthInfo );
 
-	// 브랜드 필터 업데이트
+	// 구장 필터 업데이트
 	_ResetFilter_Stadium( stadiumInfo );
 
-	// Collection(모델) 필터 업데이트
+	// 상대팀 필터 업데이트
 	_ResetFilter_AwayTeam( teamInfo );
+
+	// 기간 필터 업데이트
+	_ResetFilter_Month( monthInfo );
 }
 
-void UBWidget_RankingFilter::_GetFilteringCategoryData( TArray<FString>& Out_StadiumInfo, TArray<FString>& Out_TeamInfo )
+void UBWidget_RankingFilter::_GetFilteringCategoryData( TArray<FString>& Out_StadiumInfo, TArray<FString>& Out_TeamInfo, TArray<int32>& Out_MonthInfo )
 {
 	// 필터링된 데이터 가져오기
 	E_SORT_TYPE curSortType = E_SORT_TYPE::E_SORT_TYPE_NONE;
@@ -231,6 +282,19 @@ void UBWidget_RankingFilter::_GetFilteringCategoryData( TArray<FString>& Out_Sta
 		{
 			Out_TeamInfo.AddUnique( teamData.TeamName );
 		}
+
+		Out_MonthInfo.AddUnique( 1 );
+		Out_MonthInfo.AddUnique( 2 );
+		Out_MonthInfo.AddUnique( 3 );
+		Out_MonthInfo.AddUnique( 4 );
+		Out_MonthInfo.AddUnique( 5 );
+		Out_MonthInfo.AddUnique( 6 );
+		Out_MonthInfo.AddUnique( 7 );
+		Out_MonthInfo.AddUnique( 8 );
+		Out_MonthInfo.AddUnique( 9 );
+		Out_MonthInfo.AddUnique( 10 );
+		Out_MonthInfo.AddUnique( 11 );
+		Out_MonthInfo.AddUnique( 12 );
 
 		return;
 	}
@@ -263,6 +327,38 @@ void UBWidget_RankingFilter::_GetFilteringCategoryData( TArray<FString>& Out_Sta
 				if( teamData.TeamName == awayTeamType )
 				{
 					Out_TeamInfo.AddUnique( awayTeamType );
+					break;
+				}
+			}
+		}
+	}
+
+	// 기간 카테고리 필터링
+	if( tempFilterInfo.MonthTypes.Num() > 0 )
+	{
+		TArray<FST_MATCH_DATA> matchDataList = UFBM_SaveGame::Get().GetMatchData_DB();
+		for( auto& matchData : matchDataList )
+		{
+			if( matchData.InfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE )
+			{
+				continue;
+			}
+
+			FString MatchDate = matchData.MatchDate;
+			FString strYear = MatchDate.Left( 4 );
+			if ( _CurYear != strYear )
+			{
+				continue;
+			}
+
+			FString strMon = MatchDate.Mid( 4, 2 );
+			int32 tempMonth = FCString::Atoi( *strMon );
+
+			for( auto& monthType : tempFilterInfo.MonthTypes )
+			{
+				if( tempMonth == monthType )
+				{
+					Out_MonthInfo.AddUnique( monthType );
 					break;
 				}
 			}
@@ -327,7 +423,7 @@ void UBWidget_RankingFilter::_ResetFilter_Stadium( const TArray<FString>& stadiu
 						  return A < B;
 					  } );
 
-	// 필터링된 데이터에서 해당 경기장 갯수 계산
+	// 필터링된 데이터에서 해당 경기장 계산
 	for( auto& stadium : mapStadium )
 	{
 		int32 stadiumCount = 0;
@@ -340,20 +436,61 @@ void UBWidget_RankingFilter::_ResetFilter_Stadium( const TArray<FString>& stadiu
 			}
 
 			FString strYear = matchData.MatchDate.Left( 4 );
+			FString strMon = matchData.MatchDate.Mid( 4, 2 );
+			int32 tempMonth = FCString::Atoi( *strMon );
 			if( stadium.Key == matchData.Comment && _CurYear == strYear )
 			{
-				if( _FilterInfo.AwayTeamTypes.Num() == 0 )
+				if( _FilterInfo.AwayTeamTypes.Num() == 0 && _FilterInfo.MonthTypes.Num() == 0 )
 				{
 					stadiumCount++;
 				}
 				else
 				{
-					for( auto& checkTeam : _FilterInfo.AwayTeamTypes )
+					// 상대팀, 기간 필터링
+					if ( _FilterInfo.AwayTeamTypes.Num() > 0 && _FilterInfo.MonthTypes.Num() == 0 )
 					{
-						if( checkTeam == matchData.AwayTeamName )
+						for( auto& checkTeam : _FilterInfo.AwayTeamTypes )
 						{
-							stadiumCount++;
-							break;
+							if( checkTeam == matchData.AwayTeamName )
+							{
+								stadiumCount++;
+								break;
+							}
+						}
+					}
+					else if( _FilterInfo.MonthTypes.Num() > 0 && _FilterInfo.AwayTeamTypes.Num() == 0 )
+					{
+						for( auto& checkMonth : _FilterInfo.MonthTypes )
+						{
+							if( checkMonth == tempMonth )
+							{
+								stadiumCount++;
+								break;
+							}
+						}
+					}
+					else
+					{
+						for( auto& checkTeam : _FilterInfo.AwayTeamTypes )
+						{
+							bool bIsSuccess = false;
+							if( checkTeam == matchData.AwayTeamName )
+							{
+								for( auto& checkMonth : _FilterInfo.MonthTypes )
+								{
+									if( checkMonth == tempMonth )
+									{
+										stadiumCount++;
+										bIsSuccess = true;
+										break;
+									}
+								}
+
+								if( bIsSuccess )
+								{
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -434,6 +571,8 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 			}
 
 			FString strYear = matchData.MatchDate.Left( 4 );
+			FString strMon = matchData.MatchDate.Mid( 4, 2 );
+			int32 tempMonth = FCString::Atoi( *strMon );
 			if( team.Key == matchData.AwayTeamName && _CurYear == strYear )
 			{
 				if( bIsExceptionStadium && matchData.Comment == TEXT( "광주 문형 구장" ) )
@@ -441,18 +580,57 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 					continue;
 				}
 
-				if( _FilterInfo.StadiumTypes.Num() == 0 )
+				if( _FilterInfo.StadiumTypes.Num() == 0 && _FilterInfo.MonthTypes.Num() == 0 )
 				{
 					teamCount++;
 				}
 				else
 				{
-					for( auto& checkStadium : _FilterInfo.StadiumTypes )
+					// 상대팀, 기간 필터링
+					if( _FilterInfo.StadiumTypes.Num() > 0 && _FilterInfo.MonthTypes.Num() == 0 )
 					{
-						if( checkStadium == matchData.Comment )
+						for( auto& checkStadium : _FilterInfo.StadiumTypes )
 						{
-							teamCount++;
-							break;
+							if( checkStadium == matchData.Comment )
+							{
+								teamCount++;
+								break;
+							}
+						}
+					}
+					else if( _FilterInfo.MonthTypes.Num() > 0 && _FilterInfo.StadiumTypes.Num() == 0 )
+					{
+						for( auto& checkMonth : _FilterInfo.MonthTypes )
+						{
+							if( checkMonth == tempMonth )
+							{
+								teamCount++;
+								break;
+							}
+						}
+					}
+					else
+					{
+						for( auto& checkStadium : _FilterInfo.StadiumTypes )
+						{
+							bool bIsSuccess = false;
+							if( checkStadium == matchData.Comment )
+							{
+								for( auto& checkMonth : _FilterInfo.MonthTypes )
+								{
+									if( checkMonth == tempMonth )
+									{
+										teamCount++;
+										bIsSuccess = true;
+										break;
+									}
+								}
+
+								if ( bIsSuccess )
+								{
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -478,6 +656,145 @@ void UBWidget_RankingFilter::_ResetFilter_AwayTeam( const TArray<FString>& teamI
 			}
 
 			C_VB_Filter_AwayTeam->AddChild( bootsFilterItem );
+		}
+	}
+}
+
+void UBWidget_RankingFilter::_ResetFilter_Month( const TArray<int32>& monthInfo )
+{
+	C_Txt_Count_Month->SetVisibility( _FilterInfo.MonthTypes.Num() > 0 ? ESlateVisibility::Visible : ESlateVisibility::Hidden );
+	if( _FilterInfo.MonthTypes.Num() > 0 )
+	{
+		FText mainText = FText::AsNumber( _FilterInfo.MonthTypes[0] );
+		if( _FilterInfo.MonthTypes.Num() == 1 )
+		{
+			C_Txt_Count_Month->SetText( mainText );
+		}
+		else
+		{
+			C_Txt_Count_Month->SetText( FText::Format( GET_BTEXT( 58 ), mainText, FText::AsNumber( _FilterInfo.MonthTypes.Num() - 1 ) ) );
+		}
+	}
+
+	TMap< int32, FiterDataInfo> mapMonth;
+	for( int32 index = 1; index <= 12; ++index )
+	{
+		bool bIsFind = false;
+		for( auto& checkMonth : _FilterInfo.MonthTypes )
+		{
+			if( checkMonth == index )
+			{
+				bIsFind = true;
+				break;
+			}
+		}
+
+		mapMonth.Add( index, FiterDataInfo( bIsFind ) );
+	}
+
+	mapMonth.KeySort( []( int32 A, int32 B )
+						 {
+							 return A < B;
+						 } );
+
+	// 필터링된 데이터에서 해당 기간 갯수 계산
+	for( auto& month : mapMonth )
+	{
+		int32 monthCount = 0;
+		const TArray<FST_MATCH_DATA> matchDataList = UFBM_SaveGame::Get().GetMatchData_DB();
+		for( auto& matchData : matchDataList )
+		{
+			if( matchData.InfoType == E_MATCH_INFO_TYPE::E_MATCH_INFO_TYPE_SCHEDULE )
+			{
+				continue;
+			}
+
+			FString strYear = matchData.MatchDate.Left( 4 );
+			FString strMon = matchData.MatchDate.Mid( 4, 2 );
+			int32 tempMonth = FCString::Atoi( *strMon );
+			if( month.Key == tempMonth && _CurYear == strYear )
+			{
+				if( bIsExceptionStadium && matchData.Comment == TEXT( "광주 문형 구장" ) )
+				{
+					continue;
+				}
+
+				if( _FilterInfo.StadiumTypes.Num() == 0 && _FilterInfo.AwayTeamTypes.Num() == 0 )
+				{
+					monthCount++;
+				}
+				else
+				{
+					// 상대팀, 구장 필터링
+					if( _FilterInfo.StadiumTypes.Num() > 0 && _FilterInfo.AwayTeamTypes.Num() == 0 )
+					{
+						for( auto& checkStadium : _FilterInfo.StadiumTypes )
+						{
+							if( checkStadium == matchData.Comment )
+							{
+								monthCount++;
+								break;
+							}
+						}
+					}
+					else if( _FilterInfo.AwayTeamTypes.Num() > 0 && _FilterInfo.StadiumTypes.Num() == 0 )
+					{
+						for( auto& checkTeam : _FilterInfo.AwayTeamTypes )
+						{
+							if( checkTeam == matchData.AwayTeamName )
+							{
+								monthCount++;
+								break;
+							}
+						}
+					}
+					else
+					{
+						for( auto& checkStadium : _FilterInfo.StadiumTypes )
+						{
+							bool bIsSuccess = false;
+							if( checkStadium == matchData.Comment )
+							{
+								for( auto& checkTeam : _FilterInfo.AwayTeamTypes )
+								{
+									if( checkTeam == matchData.AwayTeamName )
+									{
+										monthCount++;
+										bIsSuccess = true;
+										break;
+									}
+								}
+
+								if( bIsSuccess )
+								{
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		month.Value.dataCount = monthCount;
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	C_VB_Filter_Month->ClearChildren();
+
+	for( auto& month : mapMonth )
+	{
+		UBWidget_EquipBootsFilterItem* bootsFilterItem = B_HUD->CreateDynamicWidget<UBWidget_EquipBootsFilterItem>( EDynamicWidgetParts::EquipBootsFilterItem );
+		if( bootsFilterItem != nullptr )
+		{
+			bootsFilterItem->OwnerPannel = this;
+			bootsFilterItem->SetRankingFilterData_Month( month.Key, month.Value.isChecked, month.Value.dataCount );
+			if( bootsFilterItem->OnClickFilterMonth.IsBoundToObject( this ) == false )
+			{
+				bootsFilterItem->OnClickFilterMonth.AddUObject( this, &UBWidget_RankingFilter::_HandleMonthFilter );
+			}
+
+			C_VB_Filter_Month->AddChild( bootsFilterItem );
 		}
 	}
 }
