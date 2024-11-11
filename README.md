@@ -42,11 +42,20 @@
 - 선수단, 코치진등 인원 구성을 확인 할 수 있는 기능
 - <img src="자료/UI/Etc/DevUtd_Screenshot_09.jpg"  width="216" height="468"/>
 
+#### 선수 정보
+- Firebase Database 연동
+- 선수의 주요 스탯 및 득점, 도움 기간별 그래프를 볼 수 있는 기능
+- <img src="자료/UI/Etc/DevUtd_Screenshot_14.jpg"  width="216" height="468"/>
+
+#### 선수 비교하기
+- 선수들간의 주요 스탯을 비교할 수 있는 기능
+- <img src="자료/UI/Etc/DevUtd_Screenshot_13.jpg"  width="216" height="468"/>
+
 #### 구장 정보
 - 팀에서 경기하는 구장들의 정보
 - 주소 및 길찾기 기능 제공
 - <img src="자료/UI/Etc/DevUtd_Screenshot_10.jpg"  width="216" height="468"/>
-  
+
 #### 공지사항
 - Firebase Remote Config 연동
 - 팀의 공지 및 징계등을 확인할 수 있는 기능
