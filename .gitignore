@@ -42,3 +42,4 @@ DevUtd/Plugins/UltimateMobileKit/Intermediate
 
 # ignore files
 DevUtd/Bigtamin.sln
+DevUtd/Config/Firebase/Android/google-services.json
